@@ -1,0 +1,8 @@
+<webscript>
+    <shortname>GetMarkingDetails</shortname>
+    <description>Webscript to return details about the existence and purpose of Enhanced Security markings that the calling authority may use</description>
+    <url>/enhanced-security/group-details</url>
+    <format default="json">any</format>
+    <authentication>user</authentication>
+    <transaction>required</transaction>
+</webscript>

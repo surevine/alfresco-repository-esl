@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Enhanced Security Labelling (ESL) Alfresco Repository Module" default="package" basedir="." xmlns:artifact="antlib:org.apache.maven.artifact.ant" xmlns:rsel="antlib:org.apache.tools.ant.types.resources.selectors">
+
+	<property name="module.name" value="repo.esl.module" />
+
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="build" />
+	<property name="dist.dir" location="dist" />
+
+	<property name="jar.file" value="${module.name}.jar" />
+	<property name="amp.file" value="${module.name}.amp" />
+
+	<property name="maven.repo.local" value="${user.home}/.m2/repository" />
+
+	<property environment="env" />
+
+	<property name="project.dir" value="." />
+
+	<property name="svn.url" value="https://svn.surevine.net/integration/enhanced_security_module/repo.esl.module/" />
+
+	<property name="svn.tags.url" value="${svn.url}tags/" />
+
+	<property name="pom.file" value="pom.xml" />
+
+	<!-- Allow for emma to capture coverage reports -->
+	<property name="coverage.dir" value="${build.dir}/coverage" />
+	<property name="emma.dir" value="${env.HOME}/tools/emma" />
+	<property name="instrumented.dir" value="${build.dir}/inst/" />
+	<path id="emma.lib">
+		<fileset dir="${emma.dir}/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+
+
+	<artifact:pom file="${pom.file}" id="pom">
+		<localRepository path="${maven.repo.local}" />
+	</artifact:pom>
+
+	<artifact:dependencies filesetId="dependency.fileset" pomRefId="pom" versionsId="dependency.versions">
+		<localRepository path="${maven.repo.local}" />
+	</artifact:dependencies>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="init" depends="clean">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${instrumented.dir}" />
+		<mkdir dir="${coverage.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<mkdir dir="${build.dir}/classes" />
+		<javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeantruntime="false" debug="true" debuglevel="lines,vars,source">
+			<classpath>
+				<fileset refid="dependency.fileset" />
+			</classpath>
+		</javac>
+
+		<copy todir="${build.dir}/classes">
+			<fileset dir="${src.dir}" includes="**/*.properties" />
+		</copy>
+	</target>
+
+	<target name="test" depends="compile, test-compile">
+		<junit fork="yes" haltonfailure="yes">
+            <jvmarg value="-Demma.coverage.out.file=${coverage.dir}/coverage.emma" />  
+    		<jvmarg value="-Demma.coverage.out.merge=true" /> 
+			<classpath>
+				<pathelement location="${instrumented.dir}" />
+				<path refid="emma.lib"/>
+				<restrict>
+					<fileset refid="dependency.fileset" />
+					<and>
+						<not>
+							<rsel:name name="junit*.jar" />
+						</not>
+						<not>
+							<rsel:name name="ant*.jar" />
+						</not>
+					</and>
+				</restrict>
+			</classpath>
+			<batchtest>
+				<fileset dir="${instrumented.dir}">
+					<include name="**/*Test.class" />
+				</fileset>
+			</batchtest>
+			<formatter type="plain" usefile="false" />
+		</junit>
+	</target>
+
+	<target name="test-compile">
+		<emma enabled="true">
+			<instr instrpath="${build.dir}/classes" destdir="${instrumented.dir}" metadatafile="${coverage.dir}/metadata.emma" merge="true">
+			</instr>
+		</emma>
+	</target>
+
+
+	<target name="coverage-report" depends="test">
+		<emma enabled="true">
+			<report sourcepath="${src.dir}">
+				<infileset dir="${coverage.dir}">
+					<include name="*.emma" />
+				</infileset>
+
+				<xml outfile="${coverage.dir}/coverage.xml" depth="method" />
+			</report>
+		</emma>
+	</target>
+	
+	<target name="package-jar" depends="test">
+		<jar destfile="${build.dir}/lib/${jar.file}">
+			<fileset dir="${build.dir}/classes" includes="**/*" />
+		</jar>
+	</target>
+
+	<target name="package-amp" depends="package-jar">
+		
+		<copy todir="${build.dir}/lib" file="${com.surevine.alfresco:alfresco_presence:jar}" />
+		
+		<zip destfile="${build.dir}/${amp.file}">
+			<fileset dir="${build.dir}" includes="lib/*.jar" />
+			<fileset dir="." includes="config/**/*.*" />
+			<fileset dir="." includes="module.properties,file-mapping.properties" />
+		</zip>
+	</target>
+
+	<target name="package" depends="package-amp">
+		<copy todir="${dist.dir}" file="${build.dir}/${amp.file}" />
+		<copy todir="${dist.dir}" file="${build.dir}/lib/${jar.file}" />
+	</target>
+
+	<target name="install" depends="package">
+		<artifact:install file="${build.dir}/lib/${jar.file}">
+			<pom refid="pom" />
+			<attach file="${build.dir}/${amp.file}" type="amp" />
+			<localRepository path="${maven.repo.local}" />
+		</artifact:install>
+	</target>
+
+	<target name="deploy" depends="package">
+		<artifact:deploy file="${build.dir}/lib/${jar.file}">
+			<pom refid="pom" />
+			<attach file="${build.dir}/${amp.file}" type="amp" />
+			<localRepository path="${maven.repo.local}" />
+		</artifact:deploy>
+	</target>
+
+	<target name="release">
+		<echo>Updating local pom.xml...</echo>
+		<replaceregexp file="${pom.file}" match="&lt;version&gt;.*&lt;/version&gt;" replace="&lt;version&gt;${env.VERSION_NUMBER_RELEASE}&lt;/version&gt;" />
+		<echo>Committing tag into ${svn.tags.url}${env.VERSION_NUMBER_RELEASE}</echo>
+		<exec executable="svn" failonerror="true">
+			<arg value="copy" />
+			<arg value="${project.dir}" />
+			<arg value="${svn.tags.url}${env.VERSION_NUMBER_RELEASE}" />
+			<arg value="-m" />
+			<arg value="Tagging for ${env.VERSION_NUMBER_RELEASE} release" />
+		</exec>
+		<echo>Building and publishing version ${env.VERSION_NUMBER_RELEASE}</echo>
+		<antcall target="deploy" />
+		<echo>Updating local pom.xml...</echo>
+		<replaceregexp file="${pom.file}" match="&lt;version&gt;.*&lt;/version&gt;" replace="&lt;version&gt;${env.VERSION_NUMBER_NEW}&lt;/version&gt;" />
+		<echo>Committing into trunk...</echo>
+		<exec executable="svn" failonerror="true">
+			<arg value="commit" />
+			<arg value="${project.dir}" />
+			<arg value="-m" />
+			<arg value="Updating version number to ${env.VERSION_NUMBER_NEW} following ${env.VERSION_NUMBER_RELEASE} release" />
+		</exec>
+	</target>
+
+</project>

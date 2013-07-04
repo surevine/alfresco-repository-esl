@@ -1,0 +1,7 @@
+<webscript>
+    <shortname>VisibilityDrillDownUserSearch</shortname>
+    <description>Webscript to search for users and return results which can be used to populate the user search autocomplete on the visibility drill-down</description>
+    <url>/enhanced-security/visibility-drill-down-user-search?query={query}</url>
+    <format default="json">any</format>
+    <authentication>user</authentication>
+</webscript>

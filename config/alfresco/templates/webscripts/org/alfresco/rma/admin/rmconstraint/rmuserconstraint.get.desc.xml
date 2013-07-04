@@ -1,0 +1,13 @@
+<webscript>
+  <shortname>Get the names of all RM Constraints owned by a given user</shortname>
+  <description>
+    Returns the combined set of open and closed markings if no constraint name is provided, otherwise
+    returns the set of allowed values for the constraint name.
+  </description>
+  <url>/api/rma/admin/rmuserconstraints</url>
+  <url>/api/rma/admin/rmuserconstraints/{constraintname}</url>
+  <format default="json">argument</format>
+  <authentication>user</authentication>
+  <transaction allow="readonly">none</transaction>
+  <lifecycle>internal</lifecycle>
+</webscript>

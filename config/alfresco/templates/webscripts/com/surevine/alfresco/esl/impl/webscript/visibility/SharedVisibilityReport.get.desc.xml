@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webscript>
+  <shortname>Visibility Report</shortname>
+   <description>Returns a report describing which closed groups with type "Groups" the current user has and who else has those groups</description>
+   <url>/api/enhanced-security/shared-visibility-report</url>
+   <format default="json">any</format>
+   <authentication>user</authentication>
+</webscript>

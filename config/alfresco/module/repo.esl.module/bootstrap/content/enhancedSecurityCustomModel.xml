@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Note that we've assumed it's acceptable for lists of values to require an admin to update a model inside Alfresco explorer
+whenever they change.
+-->
+
+<model name="es:escCustom" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+    <description>Model definitions for Enhanced Security metadata</description>
+    <author>alfresco@surevine.com, simonw@surevine.com</author>
+    <version>0.3</version>
+    
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+    </imports>
+    
+    <namespaces>
+        <!--
+        This is a temporary namespace for development purposes and could change for production 
+         -->
+        <namespace uri="http://www.alfresco.org/model/enhancedSecurity/0.3" prefix="es"/>
+    </namespaces>
+    
+    <!-- 
+    The constraints are declared out-of-line to make it easier for support staff to edit at a later date
+     -->
+    <constraints>
+    
+        <constraint name="es:validOpenMarkings" type="org.alfresco.module.org_alfresco_module_dod5015.caveat.RMListOfValuesConstraint">
+            <title>Open Markings</title>
+            <parameter name="allowedValues">
+                <list>
+                        <value>OG1</value>
+                        <value>OG2</value>
+                        <value>OG3</value>
+                        <value>OG4</value>
+                        <value>OG5</value>
+                        <value>OG6</value>
+                        <value>OG7</value>
+                        <value>OG8</value>
+                        <value>OG9</value>
+                        <value>OG10</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+            <parameter name="matchLogic"><value>OR</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validOrganisations" type="org.alfresco.module.org_alfresco_module_dod5015.caveat.RMListOfValuesConstraint">
+            <title>Organisations</title>
+            <parameter name="allowedValues">
+                <list>
+                        <value>ORG1</value>
+                        <value>ORG2</value>
+                        <value>ORG3</value>
+                        <value>ORG4</value>
+                        <value>ORG5</value>
+                        <value>ORG6</value>
+                        <value>ORG7</value>
+                        <value>ORG8</value>
+                        <value>ORG9</value>
+                        <value>ORG10</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+            <parameter name="matchLogic"><value>OR</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validClosedMarkings" type="org.alfresco.module.org_alfresco_module_dod5015.caveat.RMListOfValuesConstraint">
+            <title>Closed Markings</title>
+            <parameter name="allowedValues">
+                <list>
+                    <value>SHAREHOLDERS</value>
+                    <value>MEDICAL</value>
+                    <value>PERSONAL_DATA</value>
+                    <value>CLOSEDGROUP1</value>
+                    <value>CLOSEDGROUP2</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+            <parameter name="matchLogic"><value>AND</value></parameter>
+        </constraint>
+    
+        <!-- Although we'll only be using the very bottom of this list, it
+             was felt that we should include all the values in the enumeration
+             in order to be more compliant with COSP02
+        --> 
+        <constraint name="es:validPMs" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>NOT PROTECTIVELY MARKED</value>
+                    <value>PROTECT</value>
+                    <value>RESTRICTED</value>
+                    <value>CONFIDENTIAL</value>
+                    <value>SECRET</value>
+                    <value>TOP SECRET</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validNODs" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>UK</value>
+                    <value></value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validNationalCaveats" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>UK EYES ONLY</value>
+                    <value>UK/FREEDONIA EYES ONLY</value>
+                    <value>UK/MARS EYES ONLY</value>
+                    <value>UK/FREEDONIA/MARS EYES ONLY</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+        </constraint>
+        
+    </constraints>
+
+    <aspects>
+        <aspect name="es:enhancedSecurityLabel">
+            <title>Security Marking</title>
+            
+            <properties>
+            
+                <property name="es:openMarkings">
+                    <title>Open Markings</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple>
+                    <constraints>
+                        <constraint ref="es:validOpenMarkings"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:organisations">
+                    <title>Organisations</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple>
+                    <constraints>
+                        <constraint ref="es:validOrganisations"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:closedMarkings">
+                    <title>Closed Markings</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple>
+                    <constraints>
+                        <constraint ref="es:validClosedMarkings"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:pm">
+                    <title>Protective Marking</title>
+                    <type>d:text</type>
+                    <mandatory enforced='true'>true</mandatory>
+                    <default>NOT PROTECTIVLEY MARKED</default>
+                    <constraints>
+                        <constraint ref="es:validPMs"/>
+                    </constraints>
+                </property>
+                
+               <!--  
+               This is a bit awkward.  I'm trying to say that the nod can be either "UK" or nothing.
+               So I've gone with "You don't _have_ to have this parameter, but if you do it's got to 
+               be "UK".  I've used a LOV constraint to make it trivial to extend into a multinational
+               or officer-exchange type domain in the future
+                -->
+                <property name="es:nod">
+                    <title>National Ownership Designator</title>
+                    <type>d:text</type>
+                    <default>UK</default>
+                    <constraints>
+                        <constraint ref="es:validNODs"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:nationalityCaveats">
+                    <title>Nationality Caveats</title>
+                    <type>d:text</type>
+                    <mandatory enforced='true'>true</mandatory>
+                    <default>UK EYES ONLY</default>
+                    <constraints>
+                        <constraint ref="es:validNationalCaveats"/>
+                    </constraints>
+                </property>
+                <!-- 
+                Was thinking about making this multiple, but then you get into horrible issues about the difference 
+                between {"FOO","BAR"} and "FOO BAR" so suggest a single piece of text is simplest ergo best
+                -->
+                <property name="es:freeFormCaveats">
+                    <title>Free Form Caveats</title>
+                    <type>d:text</type>
+                </property>
+            </properties>
+        </aspect>
+    </aspects>
+    
+</model>

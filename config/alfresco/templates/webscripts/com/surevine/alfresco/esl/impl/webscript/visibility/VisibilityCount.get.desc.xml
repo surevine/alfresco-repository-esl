@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<webscript>
+  <shortname>VisibilityCount WebScript Service</shortname>
+   <description>Returns a count of the people that can see a marking with the given set of groups</description>
+   <url>/api/enhanced-security/visibility-count</url>
+   <format default="json">any</format>
+   <authentication>user</authentication>
+</webscript>

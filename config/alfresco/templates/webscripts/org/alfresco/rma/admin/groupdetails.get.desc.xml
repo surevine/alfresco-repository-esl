@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Group Details</shortname>
+  <description>Returns the details of the configured enhanced security groups</description>
+  <url>/api/rma/admin/groupdetails</url>
+  <format default="json">any</format>
+  <authentication>user</authentication>
+  <transaction allow="readonly">required</transaction>
+  <lifecycle>internal</lifecycle>
+</webscript>
