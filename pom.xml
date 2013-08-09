@@ -54,6 +54,11 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>rhino</groupId>
+			<artifactId>js</artifactId>
+			<version>1.6R7</version>
+		</dependency>    
+		<dependency>
 			<groupId>acegisecurity</groupId>
 			<artifactId>acegi-security</artifactId>
 		</dependency>
