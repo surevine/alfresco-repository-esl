@@ -1,18 +1,24 @@
-
-/**
- * This webscript retrieves metadata on available enhanced security markings.
+/*
+ * Copyright (C) 2008-2010 Surevine Limited.
  * 
- * The data is stored in a JSON file located in Company Home (TODO: Is there a better location?).
- * This script by and large reprints the data in the input JSON file, with the following changes.
+ * Although intended for deployment and use alongside Alfresco this module should
+ * be considered 'Not a Contribution' as defined in Alfresco'sstandard contribution agreement, see
+ * http://www.alfresco.org/resource/AlfrescoContributionAgreementv2.pdf
  * 
- * 1)  If the "filterDisplay" property for a constraint is set, then this script will only return those
- *     marking values to which the user has access.  This support "Closed Marking" type logic.
- * 2)  Regardless of (1), a "hasAccess" field is added indicating whether the user has access to the given marking
- *
- * An example input JSON file is given at the end of this script
- */
-
-
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*/
 //Find the groupDetails.json file at the expected location in the Repo, and parse it
 var jsonFile = companyhome.childByNamePath("groupDetails.json");
 var content = jsonFile.properties.content.content; 
