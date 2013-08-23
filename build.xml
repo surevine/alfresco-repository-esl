@@ -183,7 +183,7 @@
 
 	<target name="findbugs-report" depends="package-jar">
 		 <findbugs home="${findbugs.home}" output="xml" outputFile="${build.dir}/findbugs-result.xml" >
-		      <class location="${jar.file}" />
+		      <class location="${build.dir}/lib/${jar.file}" />
 		    </findbugs>
 	</target>
 	
