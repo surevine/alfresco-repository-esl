@@ -34,6 +34,7 @@
 	</path>
 
 	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
+	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="lib/findbugs-ant.jar" />
 
 
 	<artifact:pom file="${pom.file}" id="pom">
