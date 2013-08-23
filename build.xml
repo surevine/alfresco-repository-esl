@@ -194,7 +194,7 @@
 
 	<target name="checkstyle-report">
 		<checkstyle config="checkstyle.xml">
-			<fileset dir="${project.dir}/src" includes="**/*.java" />
+			<fileset dir="${project.dir}/src" includes="**/*.java" excludes="**/test/**/*.java"/>
 			<formatter type="plain" />
 			<formatter type="xml" toFile="${build.dir}/checkstyle-result.xml" />
 		</checkstyle>
