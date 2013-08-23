@@ -124,8 +124,9 @@ public class VisibilityUtil {
         }
 
         // Generate and return a list of users who passed all the constraints
-        for (final String authorityName : authorityCount.keySet()) {
-            if (authorityCount.get(authorityName) == markings.keySet().size()) {
+        for (final Entry<String, Integer> authorityEntry : authorityCount.entrySet()) {
+            String authorityName = authorityEntry.getKey();
+            if (authorityEntry.getValue() == markings.keySet().size()) {
                 totalMarkingResults.add(authorityName);
             }
         }
