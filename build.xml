@@ -189,8 +189,18 @@
 		 	  <sourcepath path="${src.dir}"/>
 		    </findbugs>
 	</target>
+
+	<target name="checkstyle-report">
+
+		<checkstyle config="checkstyle.xml">
+			<fileset dir="${project.dir}/source/java" includes="**/*.java" />
+			<formatter type="plain" />
+			<formatter type="xml" toFile="${build.dir}/checkstyle-result.xml" />
+		</checkstyle>
+
+	</target>
 	
-	<target name="verify" depends="coverage-report,  findbugs-report"/>
+	<target name="verify" depends="coverage-report, checkstyle-report, findbugs-report"/>
 
 	
 </project>
