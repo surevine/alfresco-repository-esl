@@ -18,10 +18,10 @@ The style of our Java code is analysed using checkstyle.  This project aims for 
 
 As an experiment, we are passing our javascript code through gjslint.  We're using the following code to do so:
 
-for f in `find ~/git/alfresco-repository-esl/ -name *js`; do gjslint --nojsdoc --max_line_length 1000 --disable 0005 $f; done
+for f in `find ~/git/alfresco-repository-esl/ -name *js`; do gjslint --nojsdoc --max_line_length 1000 --disable 0005,0200,0216,0213 $f; done
 
 To count the errors, we are using:
 
-for f in `find ~/git/alfresco-repository-esl/ -name *js`; do gjslint --nojsdoc --max_line_length 1000 --disable 0005 $f | grep ^Line ; done | wc -l
+for f in `find ~/git/alfresco-repository-esl/ -name *js`; do gjslint --nojsdoc --max_line_length 1000 --disable 0005,0200,0216,0213 $f | grep ^Line ; done | wc -l
 
-Although not yet an absolute requirement, contributors are strongly encouraged not to check in any changes that increase the reported warnings from gjslint.  This may become an absolute requirement in the future.  As of 23/8/13, there are 64 reported warnings.
+Although not yet an absolute requirement, contributors are strongly encouraged not to check in any changes that increase the reported warnings from gjslint.  This may become an absolute requirement in the future.  As of 23/8/13, there are 36 reported warnings.
