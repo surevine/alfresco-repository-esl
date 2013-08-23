@@ -27,6 +27,7 @@ import java.util.List;
 import com.surevine.alfresco.esl.exception.EnhancedSecurityException;
 import com.surevine.alfresco.esl.impl.EnhancedSecurityConstraint;
 import com.surevine.alfresco.esl.impl.EnhancedSecurityConstraintLocator;
+import com.surevine.alfresco.esl.impl.GroupDetails;
 import com.surevine.alfresco.esl.test.stub.StubEnhancedSecurityConstraintLocator;
 
 import junit.framework.TestCase;
@@ -197,6 +198,22 @@ public class EnhancedSecurityConstraintTest extends TestCase {
 			return;
 		}
 		fail("Expected to fail validation with an empty description but passed");
+	}
+	
+	public void testGetDetailsForGroup() {
+		String a = "systemName=ORG2\nhumanName=Organisation One\ntype=Organisation\ndescription=Organisation One Description\npermissionAuthorities=Hello World - test, Another Test - Org";
+		String b = "systemName=ORG3\nhumanName=Organisation Two\ntype=Organisation\ndescription=Organisation Two Description\npermissionAuthorities=Hello World - test, Another Test - Org";
+		String c = "systemName=ORG4\nhumanName=Organisation Three\ntype=Organisation\ndescription=Organisation Three Description\npermissionAuthorities=Hello World - test, Another Test - Org";
+		List<String> spec = new ArrayList<String>(3);
+		spec.add(a);
+		spec.add(b);
+		spec.add(c);
+		EnhancedSecurityConstraint esc = new EnhancedSecurityConstraint();
+		esc.setGroupDetailsSpecification(spec);
+		GroupDetails gd = esc.getDetailsForGroup("ORG3");
+		assertEquals("Organisation Two Description", gd.getDescription());
+		assertEquals("Organisation Two", gd.getHumanName());
+		assertEquals("ORG3", gd.getSystemName());		
 	}
 	
 	private EnhancedSecurityConstraint getValidEnhancedSecurityConstraint()
