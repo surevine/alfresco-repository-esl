@@ -152,7 +152,7 @@ public class GroupDetails {
 			while (keyValuePair.hasNext())
 			{
 				String keyOrValueStr = keyValuePair.next().trim();
-				if (keyOrValueStr=="")
+				if (keyOrValueStr.equals(""))
 				{
 					continue;
 				}
