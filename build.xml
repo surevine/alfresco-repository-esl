@@ -23,7 +23,7 @@
 
 	<property name="pom.file" value="pom.xml" />
 
-	<!-- Allow for emma to capture coverage reports -->
+	
 	<property name="coverage.dir" value="${build.dir}/coverage" />
 	<property name="emma.dir" value="${env.HOME}/tools/emma" />
 	<property name="instrumented.dir" value="${build.dir}/inst/" />
@@ -35,6 +35,7 @@
 
 	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
 	<taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask" classpath="lib/findbugs-ant.jar" />
+	<property name="findbugs.home" value="${user.home}/tools/findbugs"/>
 
 
 	<artifact:pom file="${pom.file}" id="pom">
