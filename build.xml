@@ -182,8 +182,10 @@
 	</target>
 
 	<target name="findbugs-report" depends="package-jar">
-		 <findbugs home="${findbugs.home}" output="xml" outputFile="${build.dir}/findbugs-result.xml" >
-		      <class location="${build.dir}/classes" />
+		 <findbugs home="${findbugs.home}" output="xml" outputFile="${build.dir}/findbugs-result.xml" debug="true" >
+		      <fileset dir="${build.dir}/lib" id="id">
+    			<include name="*jar"/>
+			</fileset>
 		 	  <sourcepath path="${src.dir}"/>
 		    </findbugs>
 	</target>
