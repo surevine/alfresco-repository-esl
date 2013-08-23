@@ -179,4 +179,10 @@
 		</exec>
 	</target>
 
+	<target name="findbugs-report" depends="package-jar">
+		 <findbugs home="${findbugs.home}" output="xml" outputFile="${build.dir}/findbugs-result.xml" >
+		      <class location="${jar.file}" />
+		    </findbugs>
+	</target>
+	
 </project>
