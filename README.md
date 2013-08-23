@@ -24,4 +24,4 @@ To count the errors, we are using:
 
 for f in `find ~/git/alfresco-repository-esl/ -name *js`; do gjslint --nojsdoc --max_line_length 1000 --disable 0005 $f | grep ^Line ; done | wc -l
 
-Although not yet an absolute requirement, contributors are strongly encouraged not to check in any changes that increase the reported warnings from gjslint.  This may become an absolute requirement in the future.
+Although not yet an absolute requirement, contributors are strongly encouraged not to check in any changes that increase the reported warnings from gjslint.  This may become an absolute requirement in the future.  As of 23/8/13, there are 64 reported warnings.
