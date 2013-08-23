@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.impl;
 
 import java.io.IOException;
@@ -62,116 +62,103 @@ import org.json.JSONArray;
  *  }]
  * }
  * </pre>
+ * 
  * @author simonw
- *
+ * 
  */
-public class GroupDetailsWebscript extends AbstractWebScript 
-{
-	
-	private static final Log LOG = LogFactory.getLog(GroupDetailsWebscript.class);
-	
-	private DictionaryService _dictionaryService;
-	
-	private RMCaveatConfigService _caveatConfigService;
-	
-	/**
-	 * Usually spring-injected
-	 */
-	public void setDictionaryService(DictionaryService dictionaryService)
-	{
-		_dictionaryService=dictionaryService;
-	}
+public class GroupDetailsWebscript extends AbstractWebScript {
 
-	/**
-	 * Usually spring-injected
-	 */
-	public void setCaveatConfigService(RMCaveatConfigService caveatConfigService)
-	{
-		_caveatConfigService=caveatConfigService;
-	}
-	
-	/**
-	 * Execute the webscript.  There's no parameters to this call (although the results do vary depending upon logged in user via _caveatConfig.getAllowedValues())
-	 * so the actual logic of this method is factored-out into a separate method for easier unit testing and reuse
-	 * 
-	 */
-    public void execute(WebScriptRequest req, WebScriptResponse resp) throws IOException
-    {
-    	resp.setContentType("application/json");
-    	resp.getWriter().write(getJSONResponseString());   
-    }
-    
+    private static final Log LOG = LogFactory.getLog(GroupDetailsWebscript.class);
+
+    private DictionaryService _dictionaryService;
+
+    private RMCaveatConfigService _caveatConfigService;
+
     /**
-     * The actual logic.  See comments on the class for example output
+     * Usually spring-injected
+     */
+    public void setDictionaryService(DictionaryService dictionaryService) {
+        _dictionaryService = dictionaryService;
+    }
+
+    /**
+     * Usually spring-injected
+     */
+    public void setCaveatConfigService(RMCaveatConfigService caveatConfigService) {
+        _caveatConfigService = caveatConfigService;
+    }
+
+    /**
+     * Execute the webscript. There's no parameters to this call (although the results do vary depending upon logged in user via _caveatConfig.getAllowedValues()) so the actual logic of this method is factored-out into a separate method for easier unit testing and reuse
+     * 
+     */
+    public void execute(WebScriptRequest req, WebScriptResponse resp) throws IOException {
+        resp.setContentType("application/json");
+        resp.getWriter().write(getJSONResponseString());
+    }
+
+    /**
+     * The actual logic. See comments on the class for example output
+     * 
      * @return
      */
-    public String getJSONResponseString()
-    {
-      	try
-    	{
-      		//Get all the enhanced security constraints
-    		Iterator<EnhancedSecurityConstraint> eslConstraints = getAllEnhancedSecurityConstraints().iterator();
-    		JSONObject root = new JSONObject();
-    		JSONArray constraints= new JSONArray();
-    		root.put("constraints", constraints);
-    		
-    		//Iterate through the constraints, populating the JSON to return.  All very straightforward, although the code is a little dense
-    		while (eslConstraints.hasNext())
-    		{
-    			EnhancedSecurityConstraint eslConstraint = eslConstraints.next();
-    			Iterator<GroupDetails> eslConstraintDetails = eslConstraint.getGroupDetails().iterator();
-    			Collection<String> allowedValuesForUser = _caveatConfigService.getRMAllowedValues(eslConstraint.getShortName());
-    			JSONObject constraint = new JSONObject();
-    			constraints.put(constraint);
-    			constraint.put("constraintName", eslConstraint.getShortName().replace(':', '_'));
-    			constraint.put("constraintDescription", eslConstraint.getDescription());
-    			constraint.put("displayPriority", eslConstraint.getDisplayPriority());
-    			JSONArray markings = new JSONArray();
-    			constraint.put("markings", markings);
-    			while (eslConstraintDetails.hasNext())
-    			{
-    				GroupDetails groupDetails = eslConstraintDetails.next();
-    				boolean hasAccess = allowedValuesForUser.contains(groupDetails.getSystemName());
-    				if ((!eslConstraint.getFilterDisplay() || hasAccess) && !groupDetails.isDeprecated())
-    				{
-    					JSONObject marking = new JSONObject();
-    					markings.put(marking);
-    					marking.put("description", groupDetails.getDescription());
-    					marking.put("hasAccess", hasAccess);
-    					marking.put("type", groupDetails.getType());
-    					marking.put("longName", groupDetails.getHumanName());
-    					marking.put("name", groupDetails.getSystemName());
-    					JSONArray permissionAuthorities = new JSONArray();
-    					marking.put("permissionAuthorities", permissionAuthorities);
-    					Iterator<PermissionAuthority> authorities = groupDetails.getPermissionAuthorities();
-    					while (authorities.hasNext())
-    					{
-    						PermissionAuthority authority = authorities.next();
-    						permissionAuthorities.put(authority.getName()+" - "+authority.getDepartment());
-    					}
-    				}
-    			}
-    		}
-    		String rVal = root.toString();
-    		if (LOG.isDebugEnabled())
-    		{
-    			LOG.debug("Returning: "+rVal);
-    		}
-    		return rVal;
-    	}
-    	catch (JSONException e)
-    	{
-    		throw new EnhancedSecurityException("The security configuration was corrupt and could not be serialised to JSON", e);
-    	}
+    public String getJSONResponseString() {
+        try {
+            // Get all the enhanced security constraints
+            Iterator<EnhancedSecurityConstraint> eslConstraints = getAllEnhancedSecurityConstraints().iterator();
+            JSONObject root = new JSONObject();
+            JSONArray constraints = new JSONArray();
+            root.put("constraints", constraints);
+
+            // Iterate through the constraints, populating the JSON to return. All very straightforward, although the code is a little dense
+            while (eslConstraints.hasNext()) {
+                EnhancedSecurityConstraint eslConstraint = eslConstraints.next();
+                Iterator<GroupDetails> eslConstraintDetails = eslConstraint.getGroupDetails().iterator();
+                Collection<String> allowedValuesForUser = _caveatConfigService.getRMAllowedValues(eslConstraint.getShortName());
+                JSONObject constraint = new JSONObject();
+                constraints.put(constraint);
+                constraint.put("constraintName", eslConstraint.getShortName().replace(':', '_'));
+                constraint.put("constraintDescription", eslConstraint.getDescription());
+                constraint.put("displayPriority", eslConstraint.getDisplayPriority());
+                JSONArray markings = new JSONArray();
+                constraint.put("markings", markings);
+                while (eslConstraintDetails.hasNext()) {
+                    GroupDetails groupDetails = eslConstraintDetails.next();
+                    boolean hasAccess = allowedValuesForUser.contains(groupDetails.getSystemName());
+                    if ((!eslConstraint.getFilterDisplay() || hasAccess) && !groupDetails.isDeprecated()) {
+                        JSONObject marking = new JSONObject();
+                        markings.put(marking);
+                        marking.put("description", groupDetails.getDescription());
+                        marking.put("hasAccess", hasAccess);
+                        marking.put("type", groupDetails.getType());
+                        marking.put("longName", groupDetails.getHumanName());
+                        marking.put("name", groupDetails.getSystemName());
+                        JSONArray permissionAuthorities = new JSONArray();
+                        marking.put("permissionAuthorities", permissionAuthorities);
+                        Iterator<PermissionAuthority> authorities = groupDetails.getPermissionAuthorities();
+                        while (authorities.hasNext()) {
+                            PermissionAuthority authority = authorities.next();
+                            permissionAuthorities.put(authority.getName() + " - " + authority.getDepartment());
+                        }
+                    }
+                }
+            }
+            String rVal = root.toString();
+            if (LOG.isDebugEnabled()) {
+                LOG.debug("Returning: " + rVal);
+            }
+            return rVal;
+        } catch (JSONException e) {
+            throw new EnhancedSecurityException("The security configuration was corrupt and could not be serialised to JSON", e);
+        }
     }
-    
+
     /**
      * Go through the system and get all of the enhanced security constraints
      */
-    protected Collection<EnhancedSecurityConstraint> getAllEnhancedSecurityConstraints()
-    {
-    	EnhancedSecurityConstraintLocator locator = new EnhancedSecurityConstraintLocator();
-    	locator.setDictionaryService(_dictionaryService);
-    	return locator.getAllEnhancedSecurityConstraints(false);
+    protected Collection<EnhancedSecurityConstraint> getAllEnhancedSecurityConstraints() {
+        EnhancedSecurityConstraintLocator locator = new EnhancedSecurityConstraintLocator();
+        locator.setDictionaryService(_dictionaryService);
+        return locator.getAllEnhancedSecurityConstraints(false);
     }
 }

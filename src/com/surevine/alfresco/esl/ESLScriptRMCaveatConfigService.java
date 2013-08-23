@@ -18,21 +18,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl;
 
 import org.alfresco.module.org_alfresco_module_dod5015.caveat.ScriptRMCaveatConfigService;
 import java.util.List;
 
 public class ESLScriptRMCaveatConfigService extends ScriptRMCaveatConfigService {
-	
-    public List<String> getAllowedValuesForCurrentUser(String constraintName) {	  
-    	
-    	constraintName = constraintName.replace('_', ':');
-    	
-    	List<String> allowedList = getRmCaveatConfigService().getRMAllowedValues(constraintName);
-    	
-    	return allowedList;
+
+    public List<String> getAllowedValuesForCurrentUser(String constraintName) {
+
+        constraintName = constraintName.replace('_', ':');
+
+        List<String> allowedList = getRmCaveatConfigService().getRMAllowedValues(constraintName);
+
+        return allowedList;
     }
 
 }

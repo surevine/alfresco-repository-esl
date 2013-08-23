@@ -18,28 +18,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.exception;
 
 /**
  * Exception to be used for unrecoverable errors within the Enhanced Security Module
- *
- * Copyright Surevine Ltd 2010.  All rights reserved
+ * 
+ * Copyright Surevine Ltd 2010. All rights reserved
  * 
  * @author alfresco@surevine.com
  * @author simon.white@surevine.com
- *
+ * 
  */
 public class EnhancedSecurityException extends RuntimeException {
-	
-	private static final long serialVersionUID = 1L;
 
-	public EnhancedSecurityException(String message) {
-		super(message);
-	}
-	
-	public EnhancedSecurityException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    private static final long serialVersionUID = 1L;
+
+    public EnhancedSecurityException(String message) {
+        super(message);
+    }
+
+    public EnhancedSecurityException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

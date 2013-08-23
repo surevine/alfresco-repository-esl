@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.impl;
 
 import java.util.Iterator;
@@ -36,29 +36,27 @@ import net.sf.acegisecurity.afterinvocation.AfterInvocationProviderManager;
 
 public class ESLAfterInvocationProviderManager extends AfterInvocationProviderManager {
 
-	private static final Log LOGGER = LogFactory.getLog(ESLAfterInvocationProviderManager.class);
-	
-	public Object decide(Authentication authentication, Object object, ConfigAttributeDefinition config,
-			Object returnedObject) throws AccessDeniedException {
-		Iterator iter = this.getProviders().iterator();
+    private static final Log LOGGER = LogFactory.getLog(ESLAfterInvocationProviderManager.class);
 
-		Object result = returnedObject;
+    public Object decide(Authentication authentication, Object object, ConfigAttributeDefinition config, Object returnedObject) throws AccessDeniedException {
+        Iterator iter = this.getProviders().iterator();
 
-		while (iter.hasNext()) {
-			AfterInvocationProvider provider = (AfterInvocationProvider) iter.next();
-			try {
-				result = provider.decide(authentication, object, config, result);
-			}
-			catch (InvalidNodeRefException e) {
-				if (provider instanceof RMAfterInvocationProvider) {
-					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug("Skipping an InvalidNodeRefException: "+e);
-					}
-				}
-			}
-		}
+        Object result = returnedObject;
 
-		return result;
+        while (iter.hasNext()) {
+            AfterInvocationProvider provider = (AfterInvocationProvider) iter.next();
+            try {
+                result = provider.decide(authentication, object, config, result);
+            } catch (InvalidNodeRefException e) {
+                if (provider instanceof RMAfterInvocationProvider) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Skipping an InvalidNodeRefException: " + e);
+                    }
+                }
+            }
+        }
 
-	}
+        return result;
+
+    }
 }

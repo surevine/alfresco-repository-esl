@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.test.stub;
 
 import java.io.File;
@@ -36,152 +36,144 @@ import org.alfresco.service.cmr.repository.NodeRef;
 
 /**
  * Stub implementation of RMCaveatConfigService to simulate the getRMAllowedValues method call
+ * 
  * @author simonw
- *
+ * 
  */
 public class CaveatServiceStub implements RMCaveatConfigService {
 
-	private List<String> _values;
-	private Map<String, Map<String, List<String>>> _constraints = new HashMap<String, Map<String,List<String>>>();
-	
-	public CaveatServiceStub(String values)
-	{
-		_values = Arrays.asList(values.split(","));		
-	}
+    private List<String> _values;
+    private Map<String, Map<String, List<String>>> _constraints = new HashMap<String, Map<String, List<String>>>();
 
-	@Override
-	public List<String> getRMAllowedValues(String constraintName) {
-		return _values;
-	}
-	
-	@Override
-	public RMConstraintInfo getRMConstraint(String listName) {
-		RMConstraintInfo rV = new RMConstraintInfo();
-		rV.setName(listName);
-		rV.setTitle("Test of "+listName);
-		rV.setCaseSensitive(true);
-		if (_constraints.get(listName)!=null) {
-			rV.setAllowedValues(_constraints.get(listName).keySet().toArray(new String[1]));
-		}
-		return rV;
-	}
-	
-	public void addConstraint(String name) {
-		_constraints.put(name, new HashMap<String, List<String>>());
-	}
-	
-	public void addUserToValue(String constraint, String value, String user) {
-		List<String> existingValues = _constraints.get(constraint).get(user);
-		if (existingValues==null) {
-			existingValues= new ArrayList<String>();
-		}
-		existingValues.add(value);
-		_constraints.get(constraint).put(user, existingValues);
-	}
-	
-	@Override
-	public Map<String, List<String>> getListDetails(String listName) {
-		return _constraints.get(listName);
-	}
+    public CaveatServiceStub(String values) {
+        _values = Arrays.asList(values.split(","));
+    }
 
-	
-	//The rest of this class is all blank implementations of the interface
-	
-	@Override
-	public boolean hasAccess(NodeRef nodeRef) {
-		// IDE-provided stub implementation intentionally left blank
-		return false;
-	}
+    @Override
+    public List<String> getRMAllowedValues(String constraintName) {
+        return _values;
+    }
 
-	@Override
-	public void init() {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public RMConstraintInfo getRMConstraint(String listName) {
+        RMConstraintInfo rV = new RMConstraintInfo();
+        rV.setName(listName);
+        rV.setTitle("Test of " + listName);
+        rV.setCaseSensitive(true);
+        if (_constraints.get(listName) != null) {
+            rV.setAllowedValues(_constraints.get(listName).keySet().toArray(new String[1]));
+        }
+        return rV;
+    }
 
-	}
+    public void addConstraint(String name) {
+        _constraints.put(name, new HashMap<String, List<String>>());
+    }
 
-	@Override
-	public Set<RMConstraintInfo> getAllRMConstraints() {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    public void addUserToValue(String constraint, String value, String user) {
+        List<String> existingValues = _constraints.get(constraint).get(user);
+        if (existingValues == null) {
+            existingValues = new ArrayList<String>();
+        }
+        existingValues.add(value);
+        _constraints.get(constraint).put(user, existingValues);
+    }
 
-	@Override
-	public NodeRef updateOrCreateCaveatConfig(File jsonFile) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    @Override
+    public Map<String, List<String>> getListDetails(String listName) {
+        return _constraints.get(listName);
+    }
 
-	@Override
-	public NodeRef updateOrCreateCaveatConfig(String jsonString) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    // The rest of this class is all blank implementations of the interface
 
-	@Override
-	public NodeRef updateOrCreateCaveatConfig(InputStream is) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    @Override
+    public boolean hasAccess(NodeRef nodeRef) {
+        // IDE-provided stub implementation intentionally left blank
+        return false;
+    }
 
-	@Override
-	public RMConstraintInfo addRMConstraint(String listName, String listTitle,
-			String[] allowedValues) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    @Override
+    public void init() {
+        // IDE-provided stub implementation intentionally left blank
 
-	@Override
-	public RMConstraintInfo updateRMConstraintAllowedValues(String listName,
-			String[] allowedValues) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    }
 
-	@Override
-	public RMConstraintInfo updateRMConstraintTitle(String listName,
-			String newTitle) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
+    @Override
+    public Set<RMConstraintInfo> getAllRMConstraints() {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	@Override
-	public void deleteRMConstraint(String listName) {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public NodeRef updateOrCreateCaveatConfig(File jsonFile) {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	}
+    @Override
+    public NodeRef updateOrCreateCaveatConfig(String jsonString) {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	@Override
-	public void addRMConstraintListValue(String listName, String authorityName,
-			String value) {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public NodeRef updateOrCreateCaveatConfig(InputStream is) {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	}
+    @Override
+    public RMConstraintInfo addRMConstraint(String listName, String listTitle, String[] allowedValues) {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	@Override
-	public void updateRMConstraintListAuthority(String listName,
-			String authorityName, List<String> values) {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public RMConstraintInfo updateRMConstraintAllowedValues(String listName, String[] allowedValues) {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	}
+    @Override
+    public RMConstraintInfo updateRMConstraintTitle(String listName, String newTitle) {
+        // IDE-provided stub implementation intentionally left blank
+        return null;
+    }
 
-	@Override
-	public void removeRMConstraintListAuthority(String listName,
-			String authorityName) {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public void deleteRMConstraint(String listName) {
+        // IDE-provided stub implementation intentionally left blank
 
-	}
+    }
 
-	@Override
-	public void updateRMConstraintListValue(String listName, String value,
-			List<String> authorities) {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public void addRMConstraintListValue(String listName, String authorityName, String value) {
+        // IDE-provided stub implementation intentionally left blank
 
-	}
+    }
 
-	@Override
-	public void removeRMConstraintListValue(String listName, String valueName) {
-		// IDE-provided stub implementation intentionally left blank
+    @Override
+    public void updateRMConstraintListAuthority(String listName, String authorityName, List<String> values) {
+        // IDE-provided stub implementation intentionally left blank
 
-	}
+    }
+
+    @Override
+    public void removeRMConstraintListAuthority(String listName, String authorityName) {
+        // IDE-provided stub implementation intentionally left blank
+
+    }
+
+    @Override
+    public void updateRMConstraintListValue(String listName, String value, List<String> authorities) {
+        // IDE-provided stub implementation intentionally left blank
+
+    }
+
+    @Override
+    public void removeRMConstraintListValue(String listName, String valueName) {
+        // IDE-provided stub implementation intentionally left blank
+
+    }
 
 }

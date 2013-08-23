@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.impl;
 
 import net.sf.acegisecurity.AccessDeniedException;
@@ -39,146 +39,133 @@ import java.util.BitSet;
 import java.util.Date;
 import org.alfresco.service.cmr.repository.NodeService;
 
-
 /**
- * After invocation provider to remove items the user can't see from results lists in searches,
- * a la Records Management, by using FilteringResultSets
+ * After invocation provider to remove items the user can't see from results lists in searches, a la Records Management, by using FilteringResultSets
  * 
- * Copyright Surevine Ltd 2010.  All rights reserved
+ * Copyright Surevine Ltd 2010. All rights reserved
  * 
  * @author alfresco@surevine.com
  * @author simon.white@surevine.com
- *
- *
+ * 
+ * 
  */
 public class ESCAfterInvocationProvider implements AfterInvocationProvider {
-	
-	
-	private static final Log LOGGER = LogFactory.getLog(ESCAfterInvocationProvider.class);
-    
-	/**
-	 * String in the Spring config identifying which methods are to be filtered 
-	 */
-	protected static final String ATTR_IDENT = "AFTER_ESC";
-	
-	private Date _nextTimeToReportMissingNodes = new Date(0l);
-	
-	private long _missingNodeReportingFrequencyMillis=60000l;
-	
-	private RMCaveatConfigComponent _caveatComponent;
-	
-	public void setCaveatComponent(RMCaveatConfigComponent caveatComponent) {
-		_caveatComponent=caveatComponent;
-	}
-	
-	private NodeService _nodeService;
-	
-	public void setNodeService(NodeService nodeService) {
-		_nodeService=nodeService;
-	}
-	
-	public void setFrequencyOfReportingOnMissingNodesInMillis(long frequency)
-	{
-		_missingNodeReportingFrequencyMillis=frequency;
-	}
-    	
+
+    private static final Log LOGGER = LogFactory.getLog(ESCAfterInvocationProvider.class);
+
+    /**
+     * String in the Spring config identifying which methods are to be filtered
+     */
+    protected static final String ATTR_IDENT = "AFTER_ESC";
+
+    private Date _nextTimeToReportMissingNodes = new Date(0l);
+
+    private long _missingNodeReportingFrequencyMillis = 60000l;
+
+    private RMCaveatConfigComponent _caveatComponent;
+
+    public void setCaveatComponent(RMCaveatConfigComponent caveatComponent) {
+        _caveatComponent = caveatComponent;
+    }
+
+    private NodeService _nodeService;
+
+    public void setNodeService(NodeService nodeService) {
+        _nodeService = nodeService;
+    }
+
+    public void setFrequencyOfReportingOnMissingNodesInMillis(long frequency) {
+        _missingNodeReportingFrequencyMillis = frequency;
+    }
+
     /**
      * Perform the filtering on ResultSets, and ignore everything else
      */
-	public Object decide(Authentication authentication, Object object, ConfigAttributeDefinition config, Object returnedObject)
-			throws AccessDeniedException {
-		
-		//Pass everything except ResultSets along, filter resultsets
-		if (returnedObject!=null && ResultSet.class.isAssignableFrom(returnedObject.getClass())) {
-			return decideOnResultSet((ResultSet)returnedObject); //safe cast as per above if() statement
-		}
-		//else 
-		
-		return returnedObject;
-	}
-	
-	/**
-	 * Called from decide(...) this method filters the contents of the input ResultSet, 
-	 * returning an output ResultSet containing only those results that RMCaveatConfig
-	 * allows the current user to see
-	 * @param unfilteredResultSet A result set to filter
-	 * @return ResultSet containing only those elemenets in <code>unfilteredResultSet</code> for which the Caveat
-	 * Service allows access to the current user
-	 */
-	protected ResultSet decideOnResultSet(ResultSet unfilteredResultSet) {
-		
-		boolean recordAnyMissingNodes = new Date().after(_nextTimeToReportMissingNodes);
-		boolean foundMissingNodes=false;
-		
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Entering decideOnResultSet");
-		}
-		
-		//Shortcut some obvious exit conditions
-		if (unfilteredResultSet==null) {
-			return null;
-		}
-		if (unfilteredResultSet.length()==0) {
-			return unfilteredResultSet;
-		}
-		
+    public Object decide(Authentication authentication, Object object, ConfigAttributeDefinition config, Object returnedObject) throws AccessDeniedException {
+
+        // Pass everything except ResultSets along, filter resultsets
+        if (returnedObject != null && ResultSet.class.isAssignableFrom(returnedObject.getClass())) {
+            return decideOnResultSet((ResultSet) returnedObject); // safe cast as per above if() statement
+        }
+        // else
+
+        return returnedObject;
+    }
+
+    /**
+     * Called from decide(...) this method filters the contents of the input ResultSet, returning an output ResultSet containing only those results that RMCaveatConfig allows the current user to see
+     * 
+     * @param unfilteredResultSet
+     *            A result set to filter
+     * @return ResultSet containing only those elemenets in <code>unfilteredResultSet</code> for which the Caveat Service allows access to the current user
+     */
+    protected ResultSet decideOnResultSet(ResultSet unfilteredResultSet) {
+
+        boolean recordAnyMissingNodes = new Date().after(_nextTimeToReportMissingNodes);
+        boolean foundMissingNodes = false;
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Entering decideOnResultSet");
+        }
+
+        // Shortcut some obvious exit conditions
+        if (unfilteredResultSet == null) {
+            return null;
+        }
+        if (unfilteredResultSet.length() == 0) {
+            return unfilteredResultSet;
+        }
+
         BitSet inclusionMask = new BitSet(unfilteredResultSet.length());
         FilteringResultSet frs = new FilteringResultSet(unfilteredResultSet, inclusionMask);
-        
+
         int length = unfilteredResultSet.length();
 
-        for (int i=0; i < length; i++) {
-        	
-        	NodeRef nodeRef = unfilteredResultSet.getNodeRef(i);
-        	
-        	if (_nodeService.exists(nodeRef)) { //If the node exists, check whether we can see it
-        	
-	        	if (_caveatComponent.hasAccess(nodeRef)) {
-	        		if (LOGGER.isDebugEnabled()) {
-	        			LOGGER.debug("Access Granted to "+nodeRef);
-	        		}
-	        		inclusionMask.set(i);	
-	        	}
-	        	else if (LOGGER.isDebugEnabled()) {
-	    			LOGGER.debug("Access forbidden to "+nodeRef);
-	    		}
-        	}
-        	else {
-        		foundMissingNodes=true;
-        		if (recordAnyMissingNodes)
-        		{
-        			LOGGER.warn("The node ["+nodeRef+"] was returned from a search but does not exist.");
-        		}
-        	}
-        }
-        
-        if (foundMissingNodes)
-        {
-        	_nextTimeToReportMissingNodes = new Date(new Date().getTime()+_missingNodeReportingFrequencyMillis);
-        	LOGGER.info("To preserve performance, the system will not report on further missing nodes until "+_nextTimeToReportMissingNodes);
-        }
-        
-		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Leaving decideOnResultSet");
-		}
-        
-        return frs;
-	}
+        for (int i = 0; i < length; i++) {
 
-	public boolean supports(ConfigAttribute attribute) {
-		
-        if ((attribute.getAttribute() != null) && (attribute.getAttribute().startsWith(ATTR_IDENT)))
-        {
-            return true;
+            NodeRef nodeRef = unfilteredResultSet.getNodeRef(i);
+
+            if (_nodeService.exists(nodeRef)) { // If the node exists, check whether we can see it
+
+                if (_caveatComponent.hasAccess(nodeRef)) {
+                    if (LOGGER.isDebugEnabled()) {
+                        LOGGER.debug("Access Granted to " + nodeRef);
+                    }
+                    inclusionMask.set(i);
+                } else if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Access forbidden to " + nodeRef);
+                }
+            } else {
+                foundMissingNodes = true;
+                if (recordAnyMissingNodes) {
+                    LOGGER.warn("The node [" + nodeRef + "] was returned from a search but does not exist.");
+                }
+            }
         }
-        else
-        {
+
+        if (foundMissingNodes) {
+            _nextTimeToReportMissingNodes = new Date(new Date().getTime() + _missingNodeReportingFrequencyMillis);
+            LOGGER.info("To preserve performance, the system will not report on further missing nodes until " + _nextTimeToReportMissingNodes);
+        }
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Leaving decideOnResultSet");
+        }
+
+        return frs;
+    }
+
+    public boolean supports(ConfigAttribute attribute) {
+
+        if ((attribute.getAttribute() != null) && (attribute.getAttribute().startsWith(ATTR_IDENT))) {
+            return true;
+        } else {
             return false;
         }
-	}
+    }
 
     public boolean supports(Class clazz) {
         return (MethodInvocation.class.isAssignableFrom(clazz));
     }
-    
+
 }

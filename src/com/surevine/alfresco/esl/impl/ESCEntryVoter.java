@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.impl;
 
 import java.io.Serializable;
@@ -54,244 +54,223 @@ import org.alfresco.module.org_alfresco_module_dod5015.caveat.RMCaveatConfigComp
 
 public class ESCEntryVoter implements AccessDecisionVoter {
 
-	// Permission types defined in the Spring config.
-	// Note that we're re-using the ACL definitions here
-	private static final String ACL_NODE = "ACL_NODE";
-	private static final String ACL_PARENT = "ACL_PARENT";
-	private static final String ACL_ALLOW = "ACL_ALLOW";
-	private static final String ACL_METHOD = "ACL_METHOD";
-	private static final String ACL_DENY = "ACL_DENY";
+    // Permission types defined in the Spring config.
+    // Note that we're re-using the ACL definitions here
+    private static final String ACL_NODE = "ACL_NODE";
+    private static final String ACL_PARENT = "ACL_PARENT";
+    private static final String ACL_ALLOW = "ACL_ALLOW";
+    private static final String ACL_METHOD = "ACL_METHOD";
+    private static final String ACL_DENY = "ACL_DENY";
 
-	private static Log logger = LogFactory.getLog(ESCEntryVoter.class);
+    private static Log logger = LogFactory.getLog(ESCEntryVoter.class);
 
-	public void setCaveatComponent(RMCaveatConfigComponent caveatComponent) {
-		_caveatComponent = caveatComponent;
-	}
+    public void setCaveatComponent(RMCaveatConfigComponent caveatComponent) {
+        _caveatComponent = caveatComponent;
+    }
 
-	private RMCaveatConfigComponent _caveatComponent;
+    private RMCaveatConfigComponent _caveatComponent;
 
-	public void setNodeServiceMethodInterceptionService(
-			NodeServiceMethodInterceptionService nsmis) {
-		_nodeMethodService = nsmis;
-	}
+    public void setNodeServiceMethodInterceptionService(NodeServiceMethodInterceptionService nsmis) {
+        _nodeMethodService = nsmis;
+    }
 
-	private NodeServiceMethodInterceptionService _nodeMethodService;
-	
-	private DictionaryService _dictionaryService;
+    private NodeServiceMethodInterceptionService _nodeMethodService;
 
-	public void setDictionaryService(DictionaryService ds) {
-		_dictionaryService = ds;
-	}
+    private DictionaryService _dictionaryService;
 
-	private NodeService _nodeService;
+    public void setDictionaryService(DictionaryService ds) {
+        _dictionaryService = ds;
+    }
 
-	public void setNodeService(NodeService ns) {
-		_nodeService = ns;
-	}
+    private NodeService _nodeService;
 
-	private PermissionService _permissionService;
+    public void setNodeService(NodeService ns) {
+        _nodeService = ns;
+    }
 
-	public void setPermissionService(PermissionService ps) {
-		_permissionService = ps;
-	}
+    private PermissionService _permissionService;
 
-	private AuthorityService _authorityService;
+    public void setPermissionService(PermissionService ps) {
+        _permissionService = ps;
+    }
 
-	public void setAuthorityService(AuthorityService as) {
-		_authorityService = as;
-	}
+    private AuthorityService _authorityService;
 
-	public int vote(Authentication authentication, Object object,
-			ConfigAttributeDefinition config) {
-		// Debug the method we've just intercepted
-		if (logger.isDebugEnabled()) {
-			MethodInvocation mi = (MethodInvocation) object;
-			logger.debug("Method: " + mi.getMethod().toString());
-		}
+    public void setAuthorityService(AuthorityService as) {
+        _authorityService = as;
+    }
 
-		// Let the system user straight through
-		if (AuthenticationUtil.isRunAsUserTheSystemUser()) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Access granted for the system user");
-			}
-			return AccessDecisionVoter.ACCESS_GRANTED;
-		}
+    public int vote(Authentication authentication, Object object, ConfigAttributeDefinition config) {
+        // Debug the method we've just intercepted
+        if (logger.isDebugEnabled()) {
+            MethodInvocation mi = (MethodInvocation) object;
+            logger.debug("Method: " + mi.getMethod().toString());
+        }
 
-		// ESC business logic is node-level, so if we're not doing a node-level
-		// method then grant access
-		if (!_nodeMethodService.hasNodeRefDefinition(config)) {
-			if (logger.isTraceEnabled()) {
-				logger.trace("Context object " + object
-						+ " does not have a NodeRef parameter for this method");
-			}
-			return AccessDecisionVoter.ACCESS_GRANTED;
-		}
+        // Let the system user straight through
+        if (AuthenticationUtil.isRunAsUserTheSystemUser()) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("Access granted for the system user");
+            }
+            return AccessDecisionVoter.ACCESS_GRANTED;
+        }
 
-		// Perform the ESC and, if it passes, return GRANTED
-		if (userHasAccess(config, (MethodInvocation) object)) {
-			return ACLEntryVoter.ACCESS_GRANTED;
-		}
+        // ESC business logic is node-level, so if we're not doing a node-level
+        // method then grant access
+        if (!_nodeMethodService.hasNodeRefDefinition(config)) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("Context object " + object + " does not have a NodeRef parameter for this method");
+            }
+            return AccessDecisionVoter.ACCESS_GRANTED;
+        }
 
-		return ACLEntryVoter.ACCESS_DENIED;
-	}
+        // Perform the ESC and, if it passes, return GRANTED
+        if (userHasAccess(config, (MethodInvocation) object)) {
+            return ACLEntryVoter.ACCESS_GRANTED;
+        }
 
-	/**
-	 * Can the user actually see all the nodes mentioned in the parameters of
-	 * the intercepted method?
-	 * 
-	 * As this method will be called very frequently, log statements are
-	 * optimised for performance rather than readability, and some other minor
-	 * optimisations have been performed.
-	 * 
-	 * @param config
-	 *            Describes the security configuration defined in the Alfresco
-	 *            Spring XML. We're piggybacking of the ACL definitions
-	 * @param mi
-	 *            Information on the method the user is trying to invoke.
-	 * @return True IFF the user can access every NodeRef in the method
-	 *         arguments that is defined in the Spring XML as protected by ACL
-	 */
-	protected boolean userHasAccess(ConfigAttributeDefinition config,
-			MethodInvocation mi) {
+        return ACLEntryVoter.ACCESS_DENIED;
+    }
 
-		Collection<NodeRef> nodeRefs = _nodeMethodService
-				.getNodeRefsUsedInMethodCall(config, mi);
+    /**
+     * Can the user actually see all the nodes mentioned in the parameters of the intercepted method?
+     * 
+     * As this method will be called very frequently, log statements are optimised for performance rather than readability, and some other minor optimisations have been performed.
+     * 
+     * @param config
+     *            Describes the security configuration defined in the Alfresco Spring XML. We're piggybacking of the ACL definitions
+     * @param mi
+     *            Information on the method the user is trying to invoke.
+     * @return True IFF the user can access every NodeRef in the method arguments that is defined in the Spring XML as protected by ACL
+     */
+    protected boolean userHasAccess(ConfigAttributeDefinition config, MethodInvocation mi) {
 
-		Iterator<NodeRef> nodeRefIter = nodeRefs.iterator();
+        Collection<NodeRef> nodeRefs = _nodeMethodService.getNodeRefsUsedInMethodCall(config, mi);
 
-		// If we can't see any of the NodeRefs in the method call, deny access
-		while (nodeRefIter.hasNext()) {
-			NodeRef nr = nodeRefIter.next();
-			if (!_caveatComponent.hasAccess(nr) || !userHasSiteAccess(nr)) {
-				return false;
-			}
-		}
+        Iterator<NodeRef> nodeRefIter = nodeRefs.iterator();
 
-		// We can see all of the NodeRefs in the method call, so grant access
-		return true;
+        // If we can't see any of the NodeRefs in the method call, deny access
+        while (nodeRefIter.hasNext()) {
+            NodeRef nr = nodeRefIter.next();
+            if (!_caveatComponent.hasAccess(nr) || !userHasSiteAccess(nr)) {
+                return false;
+            }
+        }
 
-	}
+        // We can see all of the NodeRefs in the method call, so grant access
+        return true;
 
-	public boolean supports(Class clazz) {
-		return (MethodInvocation.class.isAssignableFrom(clazz));
-	}
+    }
 
-	public boolean supports(ConfigAttribute attribute) {
-		if ((attribute.getAttribute() != null)
-				&& (attribute.getAttribute().startsWith(ACL_NODE)
-						|| attribute.getAttribute().startsWith(ACL_PARENT)
-						|| attribute.getAttribute().equals(ACL_ALLOW)
-						|| attribute.getAttribute().startsWith(ACL_METHOD) || attribute
-						.getAttribute().equals(ACL_DENY))) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public boolean supports(Class clazz) {
+        return (MethodInvocation.class.isAssignableFrom(clazz));
+    }
 
-	protected NodeRef getSiteNodeRef(NodeRef nodeRef) {
-		NodeRef siteNodeRef = null;
-		QName nodeRefType = _nodeService.getType(nodeRef);
-		if (_dictionaryService.isSubClass(nodeRefType, SiteModel.TYPE_SITE) == true) {
-			siteNodeRef = nodeRef;
-		} else {
-			ChildAssociationRef primaryParent = _nodeService
-					.getPrimaryParent(nodeRef);
-			if (primaryParent != null && primaryParent.getParentRef() != null) {
-				siteNodeRef = getSiteNodeRef(primaryParent.getParentRef());
-			}
-		}
-		return siteNodeRef;
-	}
+    public boolean supports(ConfigAttribute attribute) {
+        if ((attribute.getAttribute() != null) && (attribute.getAttribute().startsWith(ACL_NODE) || attribute.getAttribute().startsWith(ACL_PARENT) || attribute.getAttribute().equals(ACL_ALLOW) || attribute.getAttribute().startsWith(ACL_METHOD) || attribute.getAttribute().equals(ACL_DENY))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-	public boolean userHasSiteAccess(NodeRef target) {
-		String userName = AuthenticationUtil.getRunAsUser();
-		NodeRef siteNodeRef=getSiteNodeRef(target);
-		if (siteNodeRef==null) {
-			return true;
-		}
-		if (isSitePublic(siteNodeRef)) {
-			return true;
-		}
-		return (!getPermissionGroups(siteNodeRef, userName).isEmpty());
-	}
+    protected NodeRef getSiteNodeRef(NodeRef nodeRef) {
+        NodeRef siteNodeRef = null;
+        QName nodeRefType = _nodeService.getType(nodeRef);
+        if (_dictionaryService.isSubClass(nodeRefType, SiteModel.TYPE_SITE) == true) {
+            siteNodeRef = nodeRef;
+        } else {
+            ChildAssociationRef primaryParent = _nodeService.getPrimaryParent(nodeRef);
+            if (primaryParent != null && primaryParent.getParentRef() != null) {
+                siteNodeRef = getSiteNodeRef(primaryParent.getParentRef());
+            }
+        }
+        return siteNodeRef;
+    }
 
-	private List<String> getPermissionGroups(NodeRef siteNodeRef, String authorityName) {
-		if (siteNodeRef == null) {
-			throw new RuntimeException("The site does not exist");
-		}
+    public boolean userHasSiteAccess(NodeRef target) {
+        String userName = AuthenticationUtil.getRunAsUser();
+        NodeRef siteNodeRef = getSiteNodeRef(target);
+        if (siteNodeRef == null) {
+            return true;
+        }
+        if (isSitePublic(siteNodeRef)) {
+            return true;
+        }
+        return (!getPermissionGroups(siteNodeRef, userName).isEmpty());
+    }
 
-		String siteShortName = getSiteShortName(siteNodeRef);
+    private List<String> getPermissionGroups(NodeRef siteNodeRef, String authorityName) {
+        if (siteNodeRef == null) {
+            throw new RuntimeException("The site does not exist");
+        }
 
-		List<String> fullResult = new ArrayList<String>(5);
-		QName siteType = _nodeService.getType(siteNodeRef);
-		Set<String> roles = _permissionService.getSettablePermissions(siteType);
+        String siteShortName = getSiteShortName(siteNodeRef);
 
-		// First use the authority's cached recursive group memberships to
-		// answer the question quickly
-		Set<String> authorities = _authorityService
-				.getAuthoritiesForUser(authorityName);
-		for (String role : roles) {
-			String roleGroup = getSiteRoleGroup(siteShortName, role, true);
-			if (authorities.contains(roleGroup)) {
-				fullResult.add(roleGroup);
-			}
-		}
+        List<String> fullResult = new ArrayList<String>(5);
+        QName siteType = _nodeService.getType(siteNodeRef);
+        Set<String> roles = _permissionService.getSettablePermissions(siteType);
 
-		// Unfortunately, due to direct membership taking precedence, we can't
-		// answer the question quickly if more than one role has been inherited
-		if (fullResult.size() <= 1) {
-			return fullResult;
-		}
+        // First use the authority's cached recursive group memberships to
+        // answer the question quickly
+        Set<String> authorities = _authorityService.getAuthoritiesForUser(authorityName);
+        for (String role : roles) {
+            String roleGroup = getSiteRoleGroup(siteShortName, role, true);
+            if (authorities.contains(roleGroup)) {
+                fullResult.add(roleGroup);
+            }
+        }
 
-		// Check direct group memberships
-		List<String> result = new ArrayList<String>(5);
-		Set<String> authorityGroups = _authorityService
-				.getContainingAuthorities(AuthorityType.GROUP, authorityName,
-						true);
-		for (String role : roles) {
-			String roleGroup = getSiteRoleGroup(siteShortName, role, true);
-			if (authorityGroups.contains(roleGroup)) {
-				result.add(roleGroup);
-			}
-		}
+        // Unfortunately, due to direct membership taking precedence, we can't
+        // answer the question quickly if more than one role has been inherited
+        if (fullResult.size() <= 1) {
+            return fullResult;
+        }
 
-		// If there are user permissions then they take priority
-		return result.size() > 0 ? result : fullResult;
-	}
+        // Check direct group memberships
+        List<String> result = new ArrayList<String>(5);
+        Set<String> authorityGroups = _authorityService.getContainingAuthorities(AuthorityType.GROUP, authorityName, true);
+        for (String role : roles) {
+            String roleGroup = getSiteRoleGroup(siteShortName, role, true);
+            if (authorityGroups.contains(roleGroup)) {
+                result.add(roleGroup);
+            }
+        }
 
-	protected String getSiteShortName(NodeRef siteNodeRef) {
-		// Get the properties
-		Serializable property = _nodeService.getProperty(siteNodeRef,
-				ContentModel.PROP_NAME);
-		String shortName = property.toString();
-		return shortName;
-	}
+        // If there are user permissions then they take priority
+        return result.size() > 0 ? result : fullResult;
+    }
 
-	/**
-	 * Helper method to get the name of the site group
-	 * 
-	 * @param shortName
-	 *            site short name
-	 * @return String site group name
-	 */
-	public String getSiteGroup(String shortName, boolean withGroupPrefix) {
-		StringBuffer sb = new StringBuffer(64);
-		if (withGroupPrefix == true) {
-			sb.append(PermissionService.GROUP_PREFIX);
-		}
-		sb.append("site_");
-		sb.append(shortName);
-		return sb.toString();
-	}
+    protected String getSiteShortName(NodeRef siteNodeRef) {
+        // Get the properties
+        Serializable property = _nodeService.getProperty(siteNodeRef, ContentModel.PROP_NAME);
+        String shortName = property.toString();
+        return shortName;
+    }
 
-	public String getSiteRoleGroup(String shortName, String permission,
-			boolean withGroupPrefix) {
-		return getSiteGroup(shortName, withGroupPrefix) + '_' + permission;
-	}
-	
-	protected boolean isSitePublic(NodeRef siteNodeRef) {
-		String visibilityValue=_nodeService.getProperty(siteNodeRef, SiteModel.PROP_SITE_VISIBILITY).toString();
-		return SiteVisibility.valueOf(visibilityValue).equals(SiteVisibility.PUBLIC);
-	}
+    /**
+     * Helper method to get the name of the site group
+     * 
+     * @param shortName
+     *            site short name
+     * @return String site group name
+     */
+    public String getSiteGroup(String shortName, boolean withGroupPrefix) {
+        StringBuffer sb = new StringBuffer(64);
+        if (withGroupPrefix == true) {
+            sb.append(PermissionService.GROUP_PREFIX);
+        }
+        sb.append("site_");
+        sb.append(shortName);
+        return sb.toString();
+    }
+
+    public String getSiteRoleGroup(String shortName, String permission, boolean withGroupPrefix) {
+        return getSiteGroup(shortName, withGroupPrefix) + '_' + permission;
+    }
+
+    protected boolean isSitePublic(NodeRef siteNodeRef) {
+        String visibilityValue = _nodeService.getProperty(siteNodeRef, SiteModel.PROP_SITE_VISIBILITY).toString();
+        return SiteVisibility.valueOf(visibilityValue).equals(SiteVisibility.PUBLIC);
+    }
 }

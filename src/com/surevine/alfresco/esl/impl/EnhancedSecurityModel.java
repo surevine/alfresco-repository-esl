@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.impl;
 
 import org.alfresco.service.namespace.QName;
@@ -34,50 +34,51 @@ import org.alfresco.service.namespace.QName;
  *
  */
 public final class EnhancedSecurityModel {
-	
-	/**
-	 * Cannot be instantiated - holder for statics only.
-	 */
-	private EnhancedSecurityModel(){ } ;
-	
-	/**
-	 * Namespace for extensions used throughout this model
-	 */
-	public static final String NAMESPACE_SV="http://www.alfresco.org/model/enhancedSecurity/0.3";
-	
-	/**
-	 * Shortened form of the above namespace
-	 */
-	public static final String SHORT_NAMESPACE_SV="es";
-	
-	/**
-	 * QName of the Aspect used to tag a security marked content node, and to imply the security marking property
-	 */
-	public static final QName ASPECT_SECURITY_MARKING = QName.createQName(NAMESPACE_SV, "enhancedSecurityLabel");
-	
-	/**
-	 * QName of the security marking Property holding the open markings part of the security marking of a content node
-	 */
-	public static final QName PROP_OPEN_GROUPS = QName.createQName(NAMESPACE_SV, "openMarkings");
-	
-	/**
-	 * QName of the security marking Property holding the organisations part of the security marking of a content node
-	 */
-	public static final QName PROP_ORGANISATIONS = QName.createQName(NAMESPACE_SV, "organisations");
-	
-	/**
-	 * QName of the security marking Property holding the closed markings part of the actual security marking of a content node
-	 */
-	public static final QName PROP_CLOSED_GROUPS = QName.createQName(NAMESPACE_SV, "closedMarkings");
-	
-	/**
-	 * QName of the security marking Property holding the closed markings part of the actual security marking of a content node
-	 */
-	public static final QName PROP_NOD = QName.createQName(NAMESPACE_SV, "nod");
-	
-	/**
-	 * QName of the custom model itself (defined in enhancedSecurityCustomModel.xml)
-	 */
-	public static final QName MODEL = QName.createQName(NAMESPACE_SV, "escCustom");
-	
+
+    /**
+     * Cannot be instantiated - holder for statics only.
+     */
+    private EnhancedSecurityModel() {
+    };
+
+    /**
+     * Namespace for extensions used throughout this model
+     */
+    public static final String NAMESPACE_SV = "http://www.alfresco.org/model/enhancedSecurity/0.3";
+
+    /**
+     * Shortened form of the above namespace
+     */
+    public static final String SHORT_NAMESPACE_SV = "es";
+
+    /**
+     * QName of the Aspect used to tag a security marked content node, and to imply the security marking property
+     */
+    public static final QName ASPECT_SECURITY_MARKING = QName.createQName(NAMESPACE_SV, "enhancedSecurityLabel");
+
+    /**
+     * QName of the security marking Property holding the open markings part of the security marking of a content node
+     */
+    public static final QName PROP_OPEN_GROUPS = QName.createQName(NAMESPACE_SV, "openMarkings");
+
+    /**
+     * QName of the security marking Property holding the organisations part of the security marking of a content node
+     */
+    public static final QName PROP_ORGANISATIONS = QName.createQName(NAMESPACE_SV, "organisations");
+
+    /**
+     * QName of the security marking Property holding the closed markings part of the actual security marking of a content node
+     */
+    public static final QName PROP_CLOSED_GROUPS = QName.createQName(NAMESPACE_SV, "closedMarkings");
+
+    /**
+     * QName of the security marking Property holding the closed markings part of the actual security marking of a content node
+     */
+    public static final QName PROP_NOD = QName.createQName(NAMESPACE_SV, "nod");
+
+    /**
+     * QName of the custom model itself (defined in enhancedSecurityCustomModel.xml)
+     */
+    public static final QName MODEL = QName.createQName(NAMESPACE_SV, "escCustom");
+
 }

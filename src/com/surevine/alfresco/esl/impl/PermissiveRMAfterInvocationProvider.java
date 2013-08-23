@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ */
 package com.surevine.alfresco.esl.impl;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -33,23 +33,21 @@ import net.sf.acegisecurity.ConfigAttributeDefinition;
 import net.sf.acegisecurity.afterinvocation.AfterInvocationProvider;
 
 /**
- * Permissive AfterInvocationProvider implementation that participates in decisions for all ConfigAttributes,
- * provides "after invocation" processing for all object types, and allows access to all return values
+ * Permissive AfterInvocationProvider implementation that participates in decisions for all ConfigAttributes, provides "after invocation" processing for all object types, and allows access to all return values
  * 
  * @author paulguare
- *
+ * 
  */
 public class PermissiveRMAfterInvocationProvider implements AfterInvocationProvider, InitializingBean {
-    
+
     private static Log logger = LogFactory.getLog(PermissiveRMAfterInvocationProvider.class);
-    
+
     @SuppressWarnings("unused")
     private static final String AFTER_RM = "AFTER_RM";
 
     @Override
     public Object decide(Authentication authentication, Object object, ConfigAttributeDefinition config, Object returnedObject) throws AccessDeniedException {
-        if (logger.isDebugEnabled())
-        {
+        if (logger.isDebugEnabled()) {
             logger.debug("Method: " + ((MethodInvocation) object).getMethod().toString());
             logger.debug("Access allowed for " + object.getClass().getName());
         }
@@ -65,10 +63,10 @@ public class PermissiveRMAfterInvocationProvider implements AfterInvocationProvi
     public boolean supports(@SuppressWarnings("rawtypes") Class clazz) {
         return true;
     }
-    
+
     @Override
     public void afterPropertiesSet() throws Exception {
-                
+
     }
 
 }
