@@ -106,14 +106,14 @@ public class VisibilityUtil {
 		//For each constraint...
 		for (final Map<String, Boolean> individualMarking : individualMarkingResults) {
 			//...iterate through all the authorities and count how many constraints they have passed
-			for (final String authorityName : individualMarking.keySet()) {
+			for (final Entry<String, Boolean> authorityEntry : individualMarking.entrySet()) {
 			    //If the current user passes the current constraint
-			    if (individualMarking.get(authorityName)) {
+			    if (authorityEntry.getValue()) {
     				//Count the number of times we have seen this user (i.e. the number of constraints they have passed)
-    				if (!authorityCount.containsKey(authorityName)) {
-    					authorityCount.put(authorityName, 1);
+    				if (!authorityCount.containsKey(authorityEntry.getKey())) {
+    					authorityCount.put(authorityEntry.getKey(), 1);
     				} else {
-    					authorityCount.put(authorityName, authorityCount.get(authorityName) +1);
+    					authorityCount.put(authorityEntry.getKey(), authorityCount.get(authorityEntry.getKey()) +1);
     				}
 			    }
 			}
