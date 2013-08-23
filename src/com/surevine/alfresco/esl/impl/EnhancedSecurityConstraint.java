@@ -98,7 +98,7 @@ public class EnhancedSecurityConstraint extends RMListOfValuesConstraint {
 	 */
 	private static EnhancedSecurityConstraintLocator _locator;
 	
-	public void setEnhancedSecurityLocator(EnhancedSecurityConstraintLocator locator)
+	public static synchronized void setEnhancedSecurityLocator(EnhancedSecurityConstraintLocator locator)
 	{
 		_locator=locator;
 	}
