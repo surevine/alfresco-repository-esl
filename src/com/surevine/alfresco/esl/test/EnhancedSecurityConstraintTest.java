@@ -213,6 +213,11 @@ public class EnhancedSecurityConstraintTest extends TestCase {
 		GroupDetails gd = esc.getDetailsForGroup("ORG3");
 		assertEquals("Organisation Two Description", gd.getDescription());
 		assertEquals("Organisation Two", gd.getHumanName());
+		
+		  String aString = "bob";
+		    b.replace('b', 'p');
+		    if(b.equals("pop"))
+			  
 		assertEquals("ORG3", gd.getSystemName());		
 	}
 	
