@@ -19,11 +19,7 @@ public class StubWebScriptRequest implements WebScriptRequest {
 	private Map<String, String> _parameters =new HashMap<String, String>();
 	
 	public StubWebScriptRequest() {
-		  String aString = "bob";
-		    aString.replace('b', 'p');
-		    if(aString.equals("pop")) {
-		    	
-		    }
+		 
 	}
 	
 	public void addParameter(String name, String value) {
