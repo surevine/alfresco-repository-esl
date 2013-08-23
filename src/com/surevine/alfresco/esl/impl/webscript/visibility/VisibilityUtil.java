@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.alfresco.module.org_alfresco_module_dod5015.caveat.RMCaveatConfigService;
 import org.alfresco.module.org_alfresco_module_dod5015.caveat.RMConstraintInfo;
@@ -91,9 +92,8 @@ public class VisibilityUtil {
 		// was the only constraint in the marking, and put each of these into an array
 		final List<Map<String, Boolean>> individualMarkingResults = new ArrayList<Map<String, Boolean>>();
 		
-		for (final String constraintSpecName : markings.keySet()) {
-			individualMarkingResults.add(whoCanSeeMarkingForConstraint(
-					caveatConfig, constraintSpecName, markings.get(constraintSpecName)));
+		for (final Entry<String, String[]> constraintSpecEntry : markings.entrySet()) {
+			individualMarkingResults.add(whoCanSeeMarkingForConstraint(caveatConfig, constraintSpecEntry.getKey(), constraintSpecEntry.getValue()));
 		}
 		
 		// We now merge these individual return values into an aggregate associative array.  If a single constraint
@@ -277,14 +277,15 @@ public class VisibilityUtil {
 		//Alfresco maps users -> groups
 		Map<String, List<String>> authorities = configService.getListDetails(constraintName);
 		Collection<Presence> rV = new ArrayList<Presence>(authorities.size()/2); // The div 2 is just a gut heuristic with no particular mathematical reasoning behind it
-		Iterator<String> authorityNames = authorities.keySet().iterator();
+		Iterator<Entry<String, List<String>>> authorityEntries = authorities.entrySet().iterator();
 		int groupsAdded=0;
-		while (authorityNames.hasNext()) {
-			String authorityName = authorityNames.next();
+		while (authorityEntries.hasNext()) {
+			Entry<String, List<String>> authorityEntry = authorityEntries.next();
+			String authorityName = authorityEntry.getKey();
 			if (authorityName.equalsIgnoreCase("manager")) {
 				continue;
 			}
-			Iterator<String> groupsForAuthority = authorities.get(authorityName).iterator();
+			Iterator<String> groupsForAuthority = authorityEntry.getValue().iterator();
 			while (groupsForAuthority.hasNext()) {
 				if (groupsForAuthority.next().equals(groupName)) {
 					if (_logger.isDebugEnabled()) {
