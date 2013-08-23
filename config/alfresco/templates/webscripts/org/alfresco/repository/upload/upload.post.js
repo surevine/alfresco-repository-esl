@@ -1,25 +1,25 @@
 /*
  * Copyright (C) 2008-2010 Surevine Limited.
- * 
+ *
  * Although intended for deployment and use alongside Alfresco this module should
  * be considered 'Not a Contribution' as defined in Alfresco'sstandard contribution agreement, see
  * http://www.alfresco.org/resource/AlfrescoContributionAgreementv2.pdf
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-<import resource="classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/enhanced-security/lib/enhanced-security.lib.js">
+<import resource = 'classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/enhanced-security/lib/enhanced-security.lib.js' >
 
 function main()
 {
@@ -41,75 +41,75 @@ function main()
          aspects = [],
          overwrite = true,  // If a filename clashes for a versionable file
          nod = null,
-         pm=null,
-         freeformcaveats=null,
+         pm = null,
+         freeformcaveats = null,
          closedmarkings = null,
          organisations = null,
          eyes = null,
-         atomal = null
-         ;
+         atomal = null;
+
 
       // Update specific
       var updateNodeRef = null,
          majorVersion = false,
-         description = "";
-      
+         description = '';
+
       // Prevents Flash- and IE8-sourced "null" values being set for those parameters where they are invalid.
       // Note: DON'T use a "!==" comparison for "null" here.
       var fnFieldValue = function(p_field)
       {
-         return field.value.length() > 0 && field.value != "null" ? field.value : null;
+         return field.value.length() > 0 && field.value != 'null' ? field.value : null;
       };
 
       // allow the locale to be set via an argument
-      if (args["lang"] != null)
+      if (args['lang'] != null)
       {
-         utils.setLocale(args["lang"]);
+         utils.setLocale(args['lang']);
       }
 
       // Parse file attributes
-      for each (field in formdata.fields)
+      for each(field in formdata.fields)
       {
          switch (String(field.name).toLowerCase())
          {
-         
-            case "eslnationalowner":
-            	nod=field.value;
+
+            case 'eslnationalowner':
+            	nod = field.value;
             break;
-            
-            case "eslprotectivemarking":
-            	pm=field.value;
+
+            case 'eslprotectivemarking':
+            	pm = field.value;
             break;
-            
-            case "eslcaveats":
-            	freeformcaveats=field.value;
+
+            case 'eslcaveats':
+            	freeformcaveats = field.value;
             	//Note that this is less logic than is in the client-side javascript
 				//We're not trying to replicate the formatting here, just protect against XSS
 				//and the formatting rules happen to make it easy
-                freeformcaveats=freeformcaveats.replaceAll('[^a-zA-Z ]+','');
+                freeformcaveats = freeformcaveats.replaceAll('[^a-zA-Z ]+', '');
             break;
-            
-            case "eslclosedgroupshidden":
-            	closedmarkings=field.value;
+
+            case 'eslclosedgroupshidden':
+            	closedmarkings = field.value;
             break;
-            
-            case "eslorganisationshidden":
-            	organisations=field.value;
+
+            case 'eslorganisationshidden':
+            	organisations = field.value;
             break;
-            
-            case "esleyes":
-            	eyes=field.value;
+
+            case 'esleyes':
+            	eyes = field.value;
             break;
-            
-            case "eslnationalcaveats":
-			    eyes=field.value;
+
+            case 'eslnationalcaveats':
+			    eyes = field.value;
             break;
-         
-            case "eslatomal":
-                atomal=field.value;
+
+            case 'eslatomal':
+                atomal = field.value;
             break;
-         
-            case "filedata":
+
+            case 'filedata':
                if (field.isFile)
                {
                   filename = field.filename;
@@ -118,86 +118,86 @@ function main()
                }
                break;
 
-            case "siteid":
+            case 'siteid':
                siteId = fnFieldValue(field);
                break;
 
-            case "containerid":
+            case 'containerid':
                containerId = fnFieldValue(field);
                break;
 
-            case "destination":
+            case 'destination':
                destination = fnFieldValue(field);
                break;
 
-            case "uploaddirectory":
+            case 'uploaddirectory':
                uploadDirectory = fnFieldValue(field);
                if (uploadDirectory !== null)
                {
                   // Remove any leading "/" from the uploadDirectory
-                  if (uploadDirectory.substr(0, 1) == "/")
+                  if (uploadDirectory.substr(0, 1) == '/')
                   {
                      uploadDirectory = uploadDirectory.substr(1);
                   }
                   // Ensure uploadDirectory ends with "/" if not the root folder
-                  if ((uploadDirectory.length > 0) && (uploadDirectory.substring(uploadDirectory.length - 1) != "/"))
+                  if ((uploadDirectory.length > 0) && (uploadDirectory.substring(uploadDirectory.length - 1) != '/'))
                   {
-                     uploadDirectory = uploadDirectory + "/";
+                     uploadDirectory = uploadDirectory + '/';
                   }
                }
                break;
 
-            case "updatenoderef":
+            case 'updatenoderef':
                updateNodeRef = fnFieldValue(field);
                break;
 
-            case "description":
+            case 'description':
                description = field.value;
                break;
 
-            case "contenttype":
+            case 'contenttype':
                contentType = field.value;
                break;
 
-            case "aspects":
-               aspects = field.value != "-" ? field.value.split(",") : [];
+            case 'aspects':
+               aspects = field.value != '-' ? field.value.split(',') : [];
                break;
 
-            case "majorversion":
-               majorVersion = field.value == "true";
+            case 'majorversion':
+               majorVersion = field.value == 'true';
                break;
 
-            case "overwrite":
-               overwrite = field.value == "true";
+            case 'overwrite':
+               overwrite = field.value == 'true';
                break;
 
-            case "thumbnails":
+            case 'thumbnails':
                thumbnailNames = field.value;
                break;
          }
-      }      
-      
-      //The Flash uploaded in Share may have translated the empty string to "null", 
-      //so if we have a null (never a valid value), translate it back to the empty string
-      if (eyes==null)
-      {
-        eyes="";
       }
 
-      if (closedmarkings!=null)
+      //The Flash uploaded in Share may have translated the empty string to "null",
+      //so if we have a null (never a valid value), translate it back to the empty string
+      if (eyes == null)
       {
-          closedmarkings=closedmarkings+atomalToGroups(atomal, closedmarkings.length()>0);
+        eyes = '';
+      }
+
+      if (closedmarkings != null)
+      {
+          closedmarkings = closedmarkings + atomalToGroups(atomal, closedmarkings.length() > 0);
       }
       else
       {
-          closedmarkings=atomalToGroups(atomal, false);
+          closedmarkings = atomalToGroups(atomal, false);
       }
 
       // Ensure mandatory file attributes have been located. Need either destination, or site + container or updateNodeRef
       if ((filename === null || content === null) || (destination === null && (siteId === null || containerId === null) && updateNodeRef === null))
       {
          status.code = 400;
-         status.message = "Required parameters are missing";
+         status.message = 'Required parameters are missing';
          status.redirect = true;
          return;
       }
@@ -215,7 +215,7 @@ function main()
          if (site === null)
          {
             status.code = 404;
-            status.message = "Site (" + siteId + ") not found.";
+            status.message = 'Site (' + siteId + ') not found.';
             status.redirect = true;
             return;
          }
@@ -228,7 +228,7 @@ function main()
                // Create container since it didn't exist
                container = site.createContainer(containerId);
             }
-            catch(e)
+            catch (e)
             {
                // Error could be that it already exists (was created exactly after our previous check) but also something else
                container = site.getContainer(containerId);
@@ -244,11 +244,11 @@ function main()
          if (container === null)
          {
             status.code = 404;
-            status.message = "Component container (" + containerId + ") not found.";
+            status.message = 'Component container (' + containerId + ') not found.';
             status.redirect = true;
             return;
          }
-         
+
          destNode = container;
       }
       else if (destination !== null)
@@ -261,7 +261,7 @@ function main()
          if (destNode === null)
          {
             status.code = 404;
-            status.message = "Destination (" + destination + ") not found.";
+            status.message = 'Destination (' + destination + ') not found.';
             status.redirect = true;
             return;
          }
@@ -279,11 +279,11 @@ function main()
          if (updateNode === null)
          {
             status.code = 404;
-            status.message = "Node specified by updateNodeRef (" + updateNodeRef + ") not found.";
+            status.message = 'Node specified by updateNodeRef (' + updateNodeRef + ') not found.';
             status.redirect = true;
             return;
          }
-         
+
          if (updateNode.isLocked)
          {
             // We cannot update a locked document
@@ -293,7 +293,7 @@ function main()
             return;
          }
 
-         if (!updateNode.hasAspect("cm:workingcopy"))
+         if (!updateNode.hasAspect('cm:workingcopy'))
          {
             // Ensure the file is versionable (autoVersion = true, autoVersionProps = false)
             updateNode.ensureVersioningEnabled(true, false);
@@ -309,29 +309,29 @@ function main()
          updateNode.properties.content.guessEncoding();
          // check it in again, with supplied version history note
          updateNode = updateNode.checkin(description, majorVersion);
-         
+
          //Iff we've got a PM (mandatory property of an ESL) then populate the whole ESL
-	 	 if (pm != null && pm != "") {
-	 	 	if (nod==null)
+	 	 if (pm != null && pm != '') {
+	 	 	if (nod == null)
 	 	 	{
-	 	 		nod="";
+	 	 		nod = '';
 	 	 	}
-	 	 	
-	 	 	updateNode.properties["es:nod"] = nod;
-	 	 	updateNode.properties["es:pm"] = pm;
-	 	 	updateNode.properties["es:freeformcaveats"] = freeformcaveats;
-	 	 	updateNode.properties["es:nationalityCaveats"] = eyes;
-	 	 	if (closedmarkings != null && closedmarkings != "") {
-	 	 		updateNode.properties["es:closedMarkings"]=closedmarkings.split(",");
-	 	 	}
-	 	 	else {
-	 	 		updateNode.properties["es:closedMarkings"] = null;
-	 	 	}
-	 	 	if (organisations != null && organisations != "") {
-	 	 		updateNode.properties["es:organisations"] = organisations.split(",");
+
+	 	 	updateNode.properties['es:nod'] = nod;
+	 	 	updateNode.properties['es:pm'] = pm;
+	 	 	updateNode.properties['es:freeformcaveats'] = freeformcaveats;
+	 	 	updateNode.properties['es:nationalityCaveats'] = eyes;
+	 	 	if (closedmarkings != null && closedmarkings != '') {
+	 	 		updateNode.properties['es:closedMarkings'] = closedmarkings.split(',');
 	 	 	}
 	 	 	else {
-	 	 		updateNode.properties["es:organisations"] = null;
+	 	 		updateNode.properties['es:closedMarkings'] = null;
+	 	 	}
+	 	 	if (organisations != null && organisations != '') {
+	 	 		updateNode.properties['es:organisations'] = organisations.split(',');
+	 	 	}
+	 	 	else {
+	 	 		updateNode.properties['es:organisations'] = null;
 	 	 	}
 	 	 	updateNode.save();
 	 	}
@@ -362,7 +362,7 @@ function main()
          if (existingFile !== null)
          {
             // File already exists, decide what to do
-            if (existingFile.hasAspect("cm:versionable") && overwrite)
+            if (existingFile.hasAspect('cm:versionable') && overwrite)
             {
                // Upload component was configured to overwrite files if name clashes
                existingFile.properties.content.write(content);
@@ -385,7 +385,7 @@ function main()
 
                while (existingFile !== null)
                {
-                  dotIndex = filename.lastIndexOf(".");
+                  dotIndex = filename.lastIndexOf('.');
                   if (dotIndex == 0)
                   {
                      // File didn't have a proper 'name' instead it had just a suffix and started with a ".", create "1.txt"
@@ -394,12 +394,12 @@ function main()
                   else if (dotIndex > 0)
                   {
                      // Filename contained ".", create "filename-1.txt"
-                     tmpFilename = filename.substring(0, dotIndex) + "-" + counter + filename.substring(dotIndex);
+                     tmpFilename = filename.substring(0, dotIndex) + '-' + counter + filename.substring(dotIndex);
                   }
                   else
                   {
                      // Filename didn't contain a dot at all, create "filename-1"
-                     tmpFilename = filename + "-" + counter;
+                     tmpFilename = filename + '-' + counter;
                   }
                   existingFile = destNode.childByNamePath(tmpFilename);
                   counter++;
@@ -426,13 +426,13 @@ function main()
          // Create thumbnail?
          if (thumbnailNames != null)
          {
-            var thumbnails = thumbnailNames.split(","),
-               thumbnailName = "";
+            var thumbnails = thumbnailNames.split(','),
+               thumbnailName = '';
 
             for (i = 0; i < thumbnails.length; i++)
             {
                thumbnailName = thumbnails[i];
-               if (thumbnailName != "" && thumbnailService.isThumbnailNameRegistered(thumbnailName))
+               if (thumbnailName != '' && thumbnailService.isThumbnailNameRegistered(thumbnailName))
                {
                   newFile.createThumbnail(thumbnailName, true);
                }
@@ -440,29 +440,29 @@ function main()
          }
 
          //If we've got a PM (mandatory property of an ESL) then populate the whole ESL
-         if (pm != null && pm != "") {
-	         if (nod==null)
+         if (pm != null && pm != '') {
+	         if (nod == null)
  		     {
- 	           nod="";
+ 	           nod = '';
  	         }
-        	 newFile.properties["es:nod"] = nod;
-        	 newFile.properties["es:pm"] = pm;
-        	 newFile.properties["es:freeformcaveats"] = freeformcaveats;
-        	 newFile.properties["es:nationalityCaveats"] = eyes;
-        	 if (closedmarkings != null && closedmarkings != "") {
-			newFile.properties["es:closedMarkings"]=closedmarkings.split(",");
+        	 newFile.properties['es:nod'] = nod;
+        	 newFile.properties['es:pm'] = pm;
+        	 newFile.properties['es:freeformcaveats'] = freeformcaveats;
+        	 newFile.properties['es:nationalityCaveats'] = eyes;
+        	 if (closedmarkings != null && closedmarkings != '') {
+			newFile.properties['es:closedMarkings'] = closedmarkings.split(',');
         	 }
         	 else {
-        	 	newFile.properties["es:closedMarkings"] = null;
+        	 	newFile.properties['es:closedMarkings'] = null;
         	 }
-        	 if (organisations != null && organisations != "") {
-        		newFile.properties["es:organisations"] = organisations.split(",");
+        	 if (organisations != null && organisations != '') {
+        		newFile.properties['es:organisations'] = organisations.split(',');
         	 }
         	 else {
-        	 	newFile.properties["es:organisations"] = null;
+        	 	newFile.properties['es:organisations'] = null;
         	 }
         	 newFile.save();
-         }         
+         }
          // Additional aspects?
          if (aspects.length > 0)
          {
@@ -474,7 +474,7 @@ function main()
 
          // Extract metadata - via repository action for now.
          // This should use the MetadataExtracter API to fetch properties, allowing for possible failures.
-         var emAction = actions.create("extract-metadata");
+         var emAction = actions.create('extract-metadata');
          if (emAction != null)
          {
             // Call using readOnly = false, newTransaction = false
@@ -488,8 +488,8 @@ function main()
    {
 	      var x = e;
 	      status.code = 500;
-	      status.message = "Unexpected error occured during upload of new content.";
-	      if(x.message && x.message.indexOf("org.alfresco.service.cmr.usage.ContentQuotaException") == 0)
+	      status.message = 'Unexpected error occured during upload of new content.';
+	      if (x.message && x.message.indexOf('org.alfresco.service.cmr.usage.ContentQuotaException') == 0)
 	      {
 	         status.code = 413;
 	         status.message = x.message;

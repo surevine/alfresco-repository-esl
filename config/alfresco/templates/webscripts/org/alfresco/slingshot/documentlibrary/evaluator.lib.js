@@ -1,25 +1,25 @@
 /*
  * Copyright (C) 2008-2010 Surevine Limited.
- * 
+ *
  * Although intended for deployment and use alongside Alfresco this module should
  * be considered 'Not a Contribution' as defined in Alfresco'sstandard contribution agreement, see
  * http://www.alfresco.org/resource/AlfrescoContributionAgreementv2.pdf
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-<import resource="classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/enhanced-security/lib/enhanced-security.lib.js">
+<import resource = 'classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/enhanced-security/lib/enhanced-security.lib.js' >
 
 var Evaluator =
 {
@@ -28,55 +28,55 @@ var Evaluator =
     */
    getNodeType: function Evaluator_getNodeType(node)
    {
-      var nodeType = "";
+      var nodeType = '';
       if (node.isContainer)
       {
-         nodeType = "folder";
+         nodeType = 'folder';
       }
-      else if (node.typeShort == "app:folderlink")
+      else if (node.typeShort == 'app:folderlink')
       {
-         nodeType = "folderlink";
+         nodeType = 'folderlink';
       }
-      else if (node.typeShort == "app:filelink")
+      else if (node.typeShort == 'app:filelink')
       {
-         nodeType = "filelink";
+         nodeType = 'filelink';
       }
       else
       {
-         nodeType = "document";
+         nodeType = 'document';
       }
       return nodeType;
    },
-   
+
    /**
     * Parent container evaluators
     */
    parentContainer: function Evaluator_parentContainer(node, permissions)
    {
    },
-   
+
    /**
     * Document and Folder common evaluators
     */
    documentAndFolder: function Evaluator_documentAndFolder(node, permissions, status, actionLabels)
    {
       /* Simple Workflow */
-      if (node.hasAspect("app:simpleworkflow"))
+      if (node.hasAspect('app:simpleworkflow'))
       {
-         status["simple-workflow"] = true;
-         if (node.properties["app:approveStep"] != null)
+         status['simple-workflow'] = true;
+         if (node.properties['app:approveStep'] != null)
          {
-            permissions["simple-approve"] = true;
-            actionLabels["onActionSimpleApprove"] = node.properties["app:approveStep"];
+            permissions['simple-approve'] = true;
+            actionLabels['onActionSimpleApprove'] = node.properties['app:approveStep'];
          }
-         if (node.properties["app:rejectStep"] != null)
+         if (node.properties['app:rejectStep'] != null)
          {
-            permissions["simple-reject"] = true;
-            actionLabels["onActionSimpleReject"] = node.properties["app:rejectStep"];
+            permissions['simple-reject'] = true;
+            actionLabels['onActionSimpleReject'] = node.properties['app:rejectStep'];
          }
       }
    },
-   
+
    /**
     * Node Evaluator - main entrypoint
     */
@@ -84,39 +84,39 @@ var Evaluator =
    {
       var nodeType = Evaluator.getNodeType(node),
          actions = {},
-         actionSet = "empty",
+         actionSet = 'empty',
          permissions = {},
          status = {},
          custom = {},
          actionLabels = {},
          activeWorkflows = [],
-         createdBy = Common.getPerson(node.properties["cm:creator"]),
-         modifiedBy = Common.getPerson(node.properties["cm:modifier"]),
+         createdBy = Common.getPerson(node.properties['cm:creator']),
+         modifiedBy = Common.getPerson(node.properties['cm:modifier']),
          isLink = false,
          linkedNode = null,
          lockedBy = null,
-         lockOwnerUser = "",
-         eslPM = "",
-         eslNod = "",
-         eslFreeformCaveats="",
-         eslEyes="",
-         eslOpenMarkings="",
-         eslOrganisations="",
-         eslClosedMarkings="",
-         eslAtomal="";
+         lockOwnerUser = '',
+         eslPM = '',
+         eslNod = '',
+         eslFreeformCaveats = '',
+         eslEyes = '',
+         eslOpenMarkings = '',
+         eslOrganisations = '',
+         eslClosedMarkings = '',
+         eslAtomal = '';
 
       /**
        * COMMON TO ALL
        */
       permissions =
       {
-         "create": node.hasPermission("CreateChildren"),
-         "edit": node.hasPermission("Write"),
-         "delete": node.hasPermission("Delete"),
-         "permissions": node.hasPermission("ChangePermissions"),
-         "cancel-checkout": node.hasPermission("CancelCheckOut")
+         'create': node.hasPermission('CreateChildren'),
+         'edit': node.hasPermission('Write'),
+         'delete': node.hasPermission('Delete'),
+         'permissions': node.hasPermission('ChangePermissions'),
+         'cancel-checkout': node.hasPermission('CancelCheckOut')
       };
-      
+
       // When evaluating parent container
       if (isParent)
       {
@@ -129,11 +129,11 @@ var Evaluator =
          /**
           * SPECIFIC TO: LINK
           */
-         case "folderlink":
-         case "filelink":
-            actionSet = "link";
+         case 'folderlink':
+         case 'filelink':
+            actionSet = 'link';
             isLink = true;
-            
+
             /**
              * NOTE: After this point, the "node" object will be changed to a link's destination node
              *       if the original node was a filelink type.
@@ -146,124 +146,124 @@ var Evaluator =
             // Re-evaluate the nodeType based on the link's destination node
             nodeType = Evaluator.getNodeType(linkedNode);
             break;
-         
+
          /**
           * SPECIFIC TO: FOLDER
           */
-         case "folder":
-            actionSet = "folder";
+         case 'folder':
+            actionSet = 'folder';
 
             /* Document Folder common evaluator */
             Evaluator.documentAndFolder(node, permissions, status, actionLabels);
-            
+
             /* Rules applied? */
-            if (node.hasAspect("rule:rules"))
+            if (node.hasAspect('rule:rules'))
             {
-               status["rules"] = true;
+               status['rules'] = true;
             }
 
             /* Transferred Nodes */
-            if (node.hasAspect("trx:transferred"))
+            if (node.hasAspect('trx:transferred'))
             {
-               status["transferred-node"] = true;
-               permissions["view-source-repository"] = true;
-               actionSet = "transferredFolder";
+               status['transferred-node'] = true;
+               permissions['view-source-repository'] = true;
+               actionSet = 'transferredFolder';
             }
             break;
 
          /**
           * SPECIFIC TO: DOCUMENTS
           */
-         case "document":
-            actionSet = "document";
-            
+         case 'document':
+            actionSet = 'document';
+
             /* Document Folder common evaluator */
             Evaluator.documentAndFolder(node, permissions, status, actionLabels);
 
             //Enhanced Security Metadata
-             eslPM=node.properties["es:pm"];
-             eslNod=node.properties["es:nod"];
-             eslFreeformCaveats=node.properties["es:freeFormCaveats"];
-             if (eslFreeformCaveats==null)
+             eslPM = node.properties['es:pm'];
+             eslNod = node.properties['es:nod'];
+             eslFreeformCaveats = node.properties['es:freeFormCaveats'];
+             if (eslFreeformCaveats == null)
              {
-               eslFreeformCaveats="";
+               eslFreeformCaveats = '';
              }
-             eslEyes=node.properties["es:nationalityCaveats"];
-             
+             eslEyes = node.properties['es:nationalityCaveats'];
+
              eslClosedMarkings = new Array();
-             eslClosedMarkings = node.properties["es:closedMarkings"];
+             eslClosedMarkings = node.properties['es:closedMarkings'];
              var seperatedClosed = seperateAtomalFromClosedMarkings(eslClosedMarkings);
              eslClosedMarkings = seperatedClosed.closedMarkings;
              eslAtomal = seperatedClosed.atomal;
              eslOpenMarkings = new Array();
-             eslOpenMarkings = node.properties["es:openMarkings"];
+             eslOpenMarkings = node.properties['es:openMarkings'];
              eslOrganisations = new Array();
-             eslOrganisations = node.properties["es:organisations"];
-             
+             eslOrganisations = node.properties['es:organisations'];
+
             // Working Copy?
-            if (node.hasAspect("cm:workingcopy"))
+            if (node.hasAspect('cm:workingcopy'))
             {
-               var wcStatus = "";
-               lockedBy = Common.getPerson(node.properties["cm:workingCopyOwner"]);
+               var wcStatus = '';
+               lockedBy = Common.getPerson(node.properties['cm:workingCopyOwner']);
                lockOwnerUser = lockedBy.userName;
                if (lockOwnerUser == person.properties.userName)
                {
-                  wcStatus = "editing";
-                  actionSet = "workingCopyOwner";
+                  wcStatus = 'editing';
+                  actionSet = 'workingCopyOwner';
                }
                else
                {
-                  wcStatus = "locked " + lockedBy.displayName + "|" + lockedBy.userName;
-                  actionSet = "locked";
+                  wcStatus = 'locked ' + lockedBy.displayName + '|' + lockedBy.userName;
+                  actionSet = 'locked';
                }
-               var wcNode = node.properties["source"];
-               custom["isWorkingCopy"] = true;
-               custom["workingCopyOriginal"] = wcNode.nodeRef;
-               if (wcNode.hasAspect("cm:versionable") && wcNode.versionHistory !== null && wcNode.versionHistory.length > 0)
+               var wcNode = node.properties['source'];
+               custom['isWorkingCopy'] = true;
+               custom['workingCopyOriginal'] = wcNode.nodeRef;
+               if (wcNode.hasAspect('cm:versionable') && wcNode.versionHistory !== null && wcNode.versionHistory.length > 0)
                {
-                  custom["workingCopyVersion"] = wcNode.versionHistory[0].label;
+                  custom['workingCopyVersion'] = wcNode.versionHistory[0].label;
                }
-               permissions["view-original"] = true;
+               permissions['view-original'] = true;
 
                // Google Doc?
-               if (node.hasAspect("{http://www.alfresco.org/model/googledocs/1.0}googleResource"))
+               if (node.hasAspect('{http://www.alfresco.org/model/googledocs/1.0}googleResource'))
                {
-                  custom["googleDocUrl"] = node.properties["gd:url"];
-                  permissions["view-google-doc"] = true;
+                  custom['googleDocUrl'] = node.properties['gd:url'];
+                  permissions['view-google-doc'] = true;
                   if (lockOwnerUser == person.properties.userName)
                   {
-                     permissions["checkin-from-google"] = true;
-                     wcStatus = "google-docs-owner";
-                     actionSet = "googleDocOwner";
+                     permissions['checkin-from-google'] = true;
+                     wcStatus = 'google-docs-owner';
+                     actionSet = 'googleDocOwner';
                   }
                   else
                   {
-                     wcStatus = "google-docs-locked " + lockedBy.displayName + "|" + lockedBy.userName;
-                     actionSet = "googleDocLocked";
+                     wcStatus = 'google-docs-locked ' + lockedBy.displayName + '|' + lockedBy.userName;
+                     actionSet = 'googleDocLocked';
                   }
                }
                status[wcStatus] = true;
             }
             // Locked?
-            else if (node.isLocked && !node.hasAspect("trx:transferred"))
+            else if (node.isLocked && !node.hasAspect('trx:transferred'))
             {
-               var lockStatus = "";
-               lockedBy = Common.getPerson(node.properties["cm:lockOwner"]);
+               var lockStatus = '';
+               lockedBy = Common.getPerson(node.properties['cm:lockOwner']);
                lockOwnerUser = lockedBy.userName;
                if (lockOwnerUser == person.properties.userName)
                {
-                  lockStatus = "lock-owner";
-                  actionSet = "lockOwner";
+                  lockStatus = 'lock-owner';
+                  actionSet = 'lockOwner';
                }
                else
                {
-                  lockStatus = "locked " + lockedBy.displayName + "|" + lockedBy.userName;
-                  actionSet = "locked";
+                  lockStatus = 'locked ' + lockedBy.displayName + '|' + lockedBy.userName;
+                  actionSet = 'locked';
                }
                var srcNodes = search.query(
                {
-                  query: "+@cm\\:source:\"" + node.nodeRef + "\" +ISNOTNULL:cm\\:workingCopyOwner",
-                  language: "lucene",
+                  query: '+@cm\\:source:\"' + node.nodeRef + '\" +ISNOTNULL:cm\\:workingCopyOwner',
+                  language: 'lucene',
                   page:
                   {
                      maxItems: 1
@@ -271,66 +271,66 @@ var Evaluator =
                });
                if (srcNodes.length == 1)
                {
-                  custom["hasWorkingCopy"] = true;
-                  custom["workingCopyNode"] = srcNodes[0].nodeRef;
-                  permissions["view-working-copy"] = true;
+                  custom['hasWorkingCopy'] = true;
+                  custom['workingCopyNode'] = srcNodes[0].nodeRef;
+                  permissions['view-working-copy'] = true;
 
                   // Google Doc?
-                  if (srcNodes[0].hasAspect("{http://www.alfresco.org/model/googledocs/1.0}googleResource"))
+                  if (srcNodes[0].hasAspect('{http://www.alfresco.org/model/googledocs/1.0}googleResource'))
                   {
-                     custom["googleDocUrl"] = srcNodes[0].properties["gd:url"];
-                     permissions["view-google-doc"] = true;
+                     custom['googleDocUrl'] = srcNodes[0].properties['gd:url'];
+                     permissions['view-google-doc'] = true;
                      if (lockOwnerUser == person.properties.userName)
                      {
-                        permissions["checkin-from-google"] = true;
-                        lockStatus = "google-docs-owner";
-                        actionSet = "googleDocOwner";
+                        permissions['checkin-from-google'] = true;
+                        lockStatus = 'google-docs-owner';
+                        actionSet = 'googleDocOwner';
                      }
                      else
                      {
-                        lockStatus = "google-docs-locked " + lockedBy.displayName + "|" + lockedBy.userName;
-                        actionSet = "googleDocLocked";
+                        lockStatus = 'google-docs-locked ' + lockedBy.displayName + '|' + lockedBy.userName;
+                        actionSet = 'googleDocLocked';
                      }
                   }
                }
                status[lockStatus] = true;
             }
-            
+
             // Inline editable aspect?
-            if (node.hasAspect("app:inlineeditable"))
+            if (node.hasAspect('app:inlineeditable'))
             {
-               permissions["inline-edit"] = true;
+               permissions['inline-edit'] = true;
             }
-            
+
             // Google Docs editable aspect?
-            if (node.hasAspect("{http://www.alfresco.org/model/googledocs/1.0}googleEditable"))
+            if (node.hasAspect('{http://www.alfresco.org/model/googledocs/1.0}googleEditable'))
             {
-               permissions["googledocs-edit"] = true;
+               permissions['googledocs-edit'] = true;
             }
 
             /* Transferred Nodes */
-            if (node.hasAspect("trx:transferred"))
+            if (node.hasAspect('trx:transferred'))
             {
-               status["transferred-node"] = true;
-               permissions["view-source-repository"] = true;
-               actionSet = "transferredDocument";
+               status['transferred-node'] = true;
+               permissions['view-source-repository'] = true;
+               actionSet = 'transferredDocument';
             }
             break;
       }
-      
+
       if (node !== null)
       {
          // Part of an active workflow? Guard against stale worklow tasks.
          try
          {
-            for each (activeWorkflow in node.activeWorkflows)
+            for each(activeWorkflow in node.activeWorkflows)
             {
                activeWorkflows.push(activeWorkflow.id);
             }
          }
          catch (e) {}
-   
-         return(
+
+         return (
          {
             node: node,
             type: nodeType,

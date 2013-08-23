@@ -1,38 +1,38 @@
 /*
  * Copyright (C) 2008-2010 Surevine Limited.
- * 
+ *
  * Although intended for deployment and use alongside Alfresco this module should
  * be considered 'Not a Contribution' as defined in Alfresco'sstandard contribution agreement, see
  * http://www.alfresco.org/resource/AlfrescoContributionAgreementv2.pdf
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
-<import resource="classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/enhanced-security/lib/enhanced-security.lib.js">
+<import resource = 'classpath:/alfresco/templates/webscripts/org/alfresco/slingshot/enhanced-security/lib/enhanced-security.lib.js' >
 
 /**
  * Returns the fm:post node given a fm:topic or fm:post node.
- * 
+ *
  * This function makes sure that a post is returned in case the passed node is a topic.
  */
 function findPostNode(node)
 {
-   if (node.type == "{http://www.alfresco.org/model/forum/1.0}post")
+   if (node.type == '{http://www.alfresco.org/model/forum/1.0}post')
    {
       return node;
    }
-   else if (node.type == "{http://www.alfresco.org/model/forum/1.0}topic")
+   else if (node.type == '{http://www.alfresco.org/model/forum/1.0}topic')
    {
       var nodes = getOrderedPosts(node);
       if (nodes.length > 0)
@@ -41,26 +41,26 @@ function findPostNode(node)
       }
       else
       {
-         status.setCode(status.STATUS_INTERNAL_SERVER_ERROR, "First post of topic node" + node.nodeRef + " missing");
+         status.setCode(status.STATUS_INTERNAL_SERVER_ERROR, 'First post of topic node' + node.nodeRef + ' missing');
       }
    }
    else
    {
-      status.setCode(STATUS_BAD_REQUEST, "Incompatible node type. Required either fm:topic or fm:post. Received: " + node.type);
+      status.setCode(STATUS_BAD_REQUEST, 'Incompatible node type. Required either fm:topic or fm:post. Received: ' + node.type);
       return null;
    }
 }
 
- 
+
 /** Returns the posts of a topic, ordered by creation date.
  * We use this for two things: To find the root node and the last reply
  */
 function getOrderedPosts(topic)
 {
-   var query = " +TYPE:\"{http://www.alfresco.org/model/forum/1.0}post\"" +
-               " +PATH:\"" + topic.qnamePath + "/*\" ";
-   var sortAttribute = "@{http://www.alfresco.org/model/content/1.0}published";
-   return search.luceneSearch(topic.nodeRef.storeRef.toString(), query, sortAttribute, true) ;
+   var query = ' +TYPE:\"{http://www.alfresco.org/model/forum/1.0}post\"' +
+               ' +PATH:\"' + topic.qnamePath + '/*\" ';
+   var sortAttribute = '@{http://www.alfresco.org/model/content/1.0}published';
+   return search.luceneSearch(topic.nodeRef.storeRef.toString(), query, sortAttribute, true);
 }
 
 /*
@@ -68,10 +68,10 @@ function getOrderedPosts(topic)
  * to render a topic post
  */
 function getTopicPostData(topicNode)
-{  
+{
    // fetch the posts
    var posts = getOrderedPosts(topicNode);
-   
+
    return getTopicPostDataFromTopicAndPosts(topicNode, posts);
 }
 
@@ -84,24 +84,24 @@ function getTopicPostDataFromTopicAndPosts(topicNode, posts)
    // check the first post (which is the main post)
    if (posts.length < 1)
    {
-      status.setCode(status.STATUS_INTERNAL_SERVER_ERROR, "First post of topic node" + topicNode.nodeRef + " missing");
+      status.setCode(status.STATUS_INTERNAL_SERVER_ERROR, 'First post of topic node' + topicNode.nodeRef + ' missing');
       return;
    }
-   
+
    var item = {};
-   
+
    // fetch the data
    item.isTopicPost = true;
    item.topic = topicNode;
    item.post = posts[0];
    item.canEdit = canUserEditPost(item.post);
-   item.author = people.getPerson(item.post.properties["cm:creator"]);
+   item.author = people.getPerson(item.post.properties['cm:creator']);
    item.totalReplyCount = posts.length - 1;
    // in case of replies, find the last reply
    if (posts.length > 1)
    {
       item.lastReply = posts[posts.length - 1];
-      item.lastReplyBy = people.getPerson(item.lastReply.properties["cm:creator"]);
+      item.lastReplyBy = people.getPerson(item.lastReply.properties['cm:creator']);
    }
 
    // tags
@@ -114,48 +114,48 @@ function getTopicPostDataFromTopicAndPosts(topicNode, posts)
        item.tags = [];
    }
 
-   var eslNS="{http://www.alfresco.org/model/enhancedSecurity/0.3}";
-      var theESLNod=posts[0].properties[eslNS + "nod"];
-      var theESLPM=posts[0].properties[eslNS + "pm"];
-      var theESLFreeFormCaveats=posts[0].properties[eslNS + "freeFormCaveats"];
+   var eslNS = '{http://www.alfresco.org/model/enhancedSecurity/0.3}';
+      var theESLNod = posts[0].properties[eslNS + 'nod'];
+      var theESLPM = posts[0].properties[eslNS + 'pm'];
+      var theESLFreeFormCaveats = posts[0].properties[eslNS + 'freeFormCaveats'];
       var theESLClosed = new Array();
-      theESLClosed = posts[0].properties[eslNS + "closedMarkings"];
+      theESLClosed = posts[0].properties[eslNS + 'closedMarkings'];
       var seperatedClosed = seperateAtomalFromClosedMarkings(theESLClosed);
       theESLClosed = seperatedClosed.closedMarkings;
-      var theESLAtomal = seperatedClosed.atomal;    
-      
+      var theESLAtomal = seperatedClosed.atomal;
+
       var theESLOpen = new Array();
-      theESLOpen = posts[0].properties[eslNS + "openMarkings"];
-      
+      theESLOpen = posts[0].properties[eslNS + 'openMarkings'];
+
       var theESLOrganisations = new Array();
-      theESLOrganisations = posts[0].properties[eslNS + "organisations"];
-      
-      var theESLEyes= posts[0].properties[eslNS + "nationalityCaveats"];
-      
-      if (theESLNod==null) {
-        theESLNod="";
+      theESLOrganisations = posts[0].properties[eslNS + 'organisations'];
+
+      var theESLEyes = posts[0].properties[eslNS + 'nationalityCaveats'];
+
+      if (theESLNod == null) {
+        theESLNod = '';
       }
-      if (theESLPM==null) {
-        theESLPM="";
+      if (theESLPM == null) {
+        theESLPM = '';
       }
-      if (theESLFreeFormCaveats==null) {
-        theESLFreeFormCaveats="";
+      if (theESLFreeFormCaveats == null) {
+        theESLFreeFormCaveats = '';
       }
-      if (theESLEyes==null) {
-        theESLEyes="";
+      if (theESLEyes == null) {
+        theESLEyes = '';
       }
-      if (theESLAtomal==null) {
-          theESLAtomal="";
+      if (theESLAtomal == null) {
+          theESLAtomal = '';
       }
-         
-      item.eslNod=theESLNod;
-      item.eslPM=theESLPM;
-      item.eslFreeFormCaveats=theESLFreeFormCaveats;
-      item.eslClosed=theESLClosed;
-      item.eslOpen=theESLOpen;
-      item.eslEyes=theESLEyes;
-      item.eslAtomal=theESLAtomal;
-      item.eslOrganisations=theESLOrganisations;
+
+      item.eslNod = theESLNod;
+      item.eslPM = theESLPM;
+      item.eslFreeFormCaveats = theESLFreeFormCaveats;
+      item.eslClosed = theESLClosed;
+      item.eslOpen = theESLOpen;
+      item.eslEyes = theESLEyes;
+      item.eslAtomal = theESLAtomal;
+      item.eslOrganisations = theESLOrganisations;
 
    return item;
 }
@@ -169,83 +169,83 @@ function getReplyPostData(post)
    item.isTopicPost = false;
    item.post = post;
    item.canEdit = canUserEditPost(item.post);
-   item.author = people.getPerson(item.post.properties["cm:creator"]);
-   
-   var eslNS="{http://www.alfresco.org/model/enhancedSecurity/0.3}";
-   var theESLNod=post.properties[eslNS + "nod"];
-   var theESLPM=post.properties[eslNS + "pm"];
-   var theESLFreeFormCaveats=post.properties[eslNS + "freeFormCaveats"];
+   item.author = people.getPerson(item.post.properties['cm:creator']);
+
+   var eslNS = '{http://www.alfresco.org/model/enhancedSecurity/0.3}';
+   var theESLNod = post.properties[eslNS + 'nod'];
+   var theESLPM = post.properties[eslNS + 'pm'];
+   var theESLFreeFormCaveats = post.properties[eslNS + 'freeFormCaveats'];
    var theESLClosed = new Array();
-   theESLClosed = post.properties[eslNS + "closedMarkings"];
+   theESLClosed = post.properties[eslNS + 'closedMarkings'];
    var seperatedClosed = seperateAtomalFromClosedMarkings(theESLClosed);
    theESLClosed = seperatedClosed.closedMarkings;
-   var theESLAtomal = seperatedClosed.atomal;    
-      
+   var theESLAtomal = seperatedClosed.atomal;
+
    var theESLOpen = new Array();
-   theESLOpen = post.properties[eslNS + "openMarkings"];
+   theESLOpen = post.properties[eslNS + 'openMarkings'];
    var theESLOrganisations = new Array();
-   theESLOrganisations = post.properties[eslNS + "organisations"];
-   
-   var theESLEyes= post.properties[eslNS + "nationalityCaveats"];
-   
-   if (theESLNod==null) {
-     theESLNod="";
+   theESLOrganisations = post.properties[eslNS + 'organisations'];
+
+   var theESLEyes = post.properties[eslNS + 'nationalityCaveats'];
+
+   if (theESLNod == null) {
+     theESLNod = '';
          }
-   if (theESLPM==null) {
-     theESLPM="";
+   if (theESLPM == null) {
+     theESLPM = '';
       }
-   if (theESLFreeFormCaveats==null) {
-     theESLFreeFormCaveats="";
+   if (theESLFreeFormCaveats == null) {
+     theESLFreeFormCaveats = '';
    }
-   
-   if (theESLEyes==null) {
-     theESLEyes="";
+
+   if (theESLEyes == null) {
+     theESLEyes = '';
    }
-   if (theESLAtomal==null) {
-       theESLAtomal="";
+   if (theESLAtomal == null) {
+       theESLAtomal = '';
    }
-      
-   item.eslNod=theESLNod;
-   item.eslPM=theESLPM;
-   item.eslFreeFormCaveats=theESLFreeFormCaveats;
-   item.eslClosed=theESLClosed;
-   item.eslOpen=theESLOpen;
-   item.eslEyes=theESLEyes;
-   item.eslAtomal=theESLAtomal;
-   item.eslOrganisations=theESLOrganisations;
-   
+
+   item.eslNod = theESLNod;
+   item.eslPM = theESLPM;
+   item.eslFreeFormCaveats = theESLFreeFormCaveats;
+   item.eslClosed = theESLClosed;
+   item.eslOpen = theESLOpen;
+   item.eslEyes = theESLEyes;
+   item.eslAtomal = theESLAtomal;
+   item.eslOrganisations = theESLOrganisations;
+
    return item;
 }
 
 /**
  * Returns true if the current user can edit the post.
- * 
+ *
  * Site managers can edit any post, everyone else should only
  * be able to edit their own posts.
  */
 function canUserEditPost(post)
 {
    // see if user has write permission first of all
-   var canEdit = post.hasPermission("Write");
-   
+   var canEdit = post.hasPermission('Write');
+
    // if current user is not the same user as the author check
    // that they are a site manager otherwise they can't edit the post
    if (canEdit)
    {
       // get the site id
       var siteId = url.templateArgs.site;
-      
+
       if (siteId !== null)
       {
-         var username = person.properties["cm:userName"];
-         var postAuthor = post.properties["cm:creator"];
-   
+         var username = person.properties['cm:userName'];
+         var postAuthor = post.properties['cm:creator'];
+
          if (username != postAuthor)
          {
             canEdit = siteService.isSiteManager(siteId);
          }
       }
    }
-   
+
    return canEdit;
 }
