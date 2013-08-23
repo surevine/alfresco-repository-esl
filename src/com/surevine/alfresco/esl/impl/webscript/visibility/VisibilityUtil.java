@@ -129,8 +129,7 @@ public class VisibilityUtil {
 		return totalMarkingResults;
 	}
 	
-	private Map<String, Boolean> whoCanSeeMarkingForConstraint(final RMCaveatConfigService caveatConfig,
-			final String constraintSpecName, final String[] constraintSpecValues) {
+	private Map<String, Boolean> whoCanSeeMarkingForConstraint(final RMCaveatConfigService caveatConfig, final String constraintSpecName, final String[] constraintSpecValues) {
 		final Map<String, Boolean> retVal = new HashMap<String, Boolean>();
 		
 		final RMConstraintInfo constraint = caveatConfig.getRMConstraint(constraintSpecName);
@@ -139,15 +138,14 @@ public class VisibilityUtil {
 		
 		//For each authority...
 		for (final String authorityName : authorities.keySet()) {
-			boolean hasAccess = processLogic(caveatConfig, constraintSpecName, constraintSpecValues, constraint, authorityName,andLogic);
+			boolean hasAccess = processLogic(caveatConfig, constraintSpecName, constraintSpecValues, authorityName,andLogic);
 			
 			retVal.put(authorityName, hasAccess);
 		}
 		return retVal;
 	}
 	
-	private boolean processLogic(final RMCaveatConfigService caveatConfig, final String constraintSpecName,
-			final String[] constraintSpecValues, final RMConstraintInfo constraint, final String authorityName,
+	private boolean processLogic(final RMCaveatConfigService caveatConfig, final String constraintSpecName, final String[] constraintSpecValues, final String authorityName,
 			final boolean andLogic) {
 	    final List<String> authorityValues = caveatConfig.getListDetails(constraintSpecName).get(authorityName);
 	    

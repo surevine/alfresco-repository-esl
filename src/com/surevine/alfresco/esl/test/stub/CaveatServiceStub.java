@@ -23,7 +23,9 @@ package com.surevine.alfresco.esl.test.stub;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +42,7 @@ import org.alfresco.service.cmr.repository.NodeRef;
 public class CaveatServiceStub implements RMCaveatConfigService {
 
 	private List<String> _values;
+	private Map<String, Map<String, List<String>>> _constraints = new HashMap<String, Map<String,List<String>>>();
 	
 	public CaveatServiceStub(String values)
 	{
@@ -49,6 +52,36 @@ public class CaveatServiceStub implements RMCaveatConfigService {
 	@Override
 	public List<String> getRMAllowedValues(String constraintName) {
 		return _values;
+	}
+	
+	@Override
+	public RMConstraintInfo getRMConstraint(String listName) {
+		RMConstraintInfo rV = new RMConstraintInfo();
+		rV.setName(listName);
+		rV.setTitle("Test of "+listName);
+		rV.setCaseSensitive(true);
+		if (_constraints.get(listName)!=null) {
+			rV.setAllowedValues(_constraints.get(listName).keySet().toArray(new String[1]));
+		}
+		return rV;
+	}
+	
+	public void addConstraint(String name) {
+		_constraints.put(name, new HashMap<String, List<String>>());
+	}
+	
+	public void addUserToValue(String constraint, String value, String user) {
+		List<String> existingValues = _constraints.get(constraint).get(user);
+		if (existingValues==null) {
+			existingValues= new ArrayList<String>();
+		}
+		existingValues.add(value);
+		_constraints.get(constraint).put(user, existingValues);
+	}
+	
+	@Override
+	public Map<String, List<String>> getListDetails(String listName) {
+		return _constraints.get(listName);
 	}
 
 	
@@ -65,21 +98,9 @@ public class CaveatServiceStub implements RMCaveatConfigService {
 		// IDE-provided stub implementation intentionally left blank
 
 	}
-	
-	@Override
-	public RMConstraintInfo getRMConstraint(String listName) {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
 
 	@Override
 	public Set<RMConstraintInfo> getAllRMConstraints() {
-		// IDE-provided stub implementation intentionally left blank
-		return null;
-	}
-
-	@Override
-	public Map<String, List<String>> getListDetails(String listName) {
 		// IDE-provided stub implementation intentionally left blank
 		return null;
 	}
