@@ -1,0 +1,1848 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="es:escCustom" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+    <description>Model definitions for Enhanced Security metadata</description>
+    <author>alfresco@surevine.com, simon.white@surevine.com</author>
+    <version>0.3</version>
+
+    <imports>
+        <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d"/>
+        <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys"/>
+    </imports>
+
+    <namespaces>
+        <namespace uri="http://www.alfresco.org/model/enhancedSecurity/0.3" prefix="es"/>
+    </namespaces>
+    
+    <!-- 
+    The constraints are declared out-of-line to make it easier for support staff to edit at a later date
+     -->
+    <constraints>
+    
+        <constraint name="es:validOpenMarkings" type="com.surevine.alfresco.esl.impl.EnhancedSecurityConstraint">
+            <title>Open Markings</title>
+            <parameter name="groupDetailsSpecification">
+                <list>
+        <value>
+            systemName=NSOJB
+            humanName=NSOJB
+            type=Thematic Groups
+            description=alf_om_NSOJB
+            permissionAuthorities=Jonny Heavey - Surevine
+            deprecated=true
+
+        </value>
+        <value>
+            systemName=ULLY
+            humanName=ULLY
+            type=Thematic Groups
+            description=alf_om_ULLY
+            permissionAuthorities=Jonny Heavey - Surevine
+            deprecated=true
+            
+        </value>
+        <value>
+            systemName=PKYO
+            humanName=PKYO
+            type=Thematic Groups
+            description=alf_om_PKYO
+            permissionAuthorities=Jonny Heavey - Surevine
+            deprecated=true
+            
+        </value>
+        <value>
+            systemName=BAKF
+            humanName=BAKF
+            type=Thematic Groups
+            description=alf_om_BAKF
+            permissionAuthorities=Jonny Heavey - Surevine
+            deprecated=true
+            
+        </value>
+        <value>
+            systemName=WHUQ
+            humanName=WHUQ
+            type=Thematic Groups
+            description=alf_om_WHUQ
+            permissionAuthorities=Jonny Heavey - Surevine
+            deprecated=true
+            
+        </value>
+        <value>
+            systemName=RGJY
+            humanName=RGJY
+            type=Thematic Groups
+            description=alf_om_RGJY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=AUJTR
+            humanName=AUJTR
+            type=Thematic Groups
+            description=alf_om_AUJTR
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ETKW
+            humanName=ETKW
+            type=Thematic Groups
+            description=alf_om_ETKW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=JACD
+            humanName=JACD
+            type=Thematic Groups
+            description=alf_om_JACD
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ORBZ
+            humanName=ORBZ
+            type=Thematic Groups
+            description=alf_om_ORBZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HUQKH
+            humanName=HUQKH
+            type=Thematic Groups
+            description=alf_om_HUQKH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FGYIP
+            humanName=FGYIP
+            type=Thematic Groups
+            description=alf_om_FGYIP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=JHTB
+            humanName=JHTB
+            type=Thematic Groups
+            description=alf_om_JHTB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=EDNL
+            humanName=EDNL
+            type=Thematic Groups
+            description=alf_om_EDNL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LLDC
+            humanName=LLDC
+            type=Thematic Groups
+            description=alf_om_LLDC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BZDY
+            humanName=BZDY
+            type=Thematic Groups
+            description=alf_om_BZDY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LYNN
+            humanName=LYNN
+            type=Thematic Groups
+            description=alf_om_LYNN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QSQT
+            humanName=QSQT
+            type=Thematic Groups
+            description=alf_om_QSQT
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BQXJ
+            humanName=BQXJ
+            type=Thematic Groups
+            description=alf_om_BQXJ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=SIOA
+            humanName=SIOA
+            type=Thematic Groups
+            description=alf_om_SIOA
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=WBBO
+            humanName=WBBO
+            type=Thematic Groups
+            description=alf_om_WBBO
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MWCY
+            humanName=MWCY
+            type=Thematic Groups
+            description=alf_om_MWCY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QVEG
+            humanName=QVEG
+            type=Thematic Groups
+            description=alf_om_QVEG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LKOL
+            humanName=LKOL
+            type=Thematic Groups
+            description=alf_om_LKOL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=DTUT
+            humanName=DTUT
+            type=Thematic Groups
+            description=alf_om_DTUT
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=JHWP
+            humanName=JHWP
+            type=Thematic Groups
+            description=alf_om_JHWP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UZLL
+            humanName=UZLL
+            type=Thematic Groups
+            description=alf_om_UZLL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=TXRAH
+            humanName=TXRAH
+            type=Thematic Groups
+            description=alf_om_TXRAH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LHVF
+            humanName=LHVF
+            type=Thematic Groups
+            description=alf_om_LHVF
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GCSZ
+            humanName=GCSZ
+            type=Thematic Groups
+            description=alf_om_GCSZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=PGSP
+            humanName=PGSP
+            type=Thematic Groups
+            description=alf_om_PGSP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=PNUT
+            humanName=PNUT
+            type=Thematic Groups
+            description=alf_om_PNUT
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QOEG
+            humanName=QOEG
+            type=Thematic Groups
+            description=alf_om_QOEG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GFRN
+            humanName=GFRN
+            type=Thematic Groups
+            description=alf_om_GFRN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=OEPY
+            humanName=OEPY
+            type=Thematic Groups
+            description=alf_om_OEPY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RRHL
+            humanName=RRHL
+            type=Thematic Groups
+            description=alf_om_RRHL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=NLYA
+            humanName=NLYA
+            type=Thematic Groups
+            description=alf_om_NLYA
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RUOX
+            humanName=RUOX
+            type=Thematic Groups
+            description=alf_om_RUOX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HDRS
+            humanName=HDRS
+            type=Thematic Groups
+            description=alf_om_HDRS
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=TP
+            humanName=TP
+            type=Thematic Groups
+            description=alf_om_TP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=EQPX
+            humanName=EQPX
+            type=Thematic Groups
+            description=alf_om_EQPX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QXAL
+            humanName=QXAL
+            type=Thematic Groups
+            description=alf_om_QXAL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UOVH
+            humanName=UOVH
+            type=Thematic Groups
+            description=alf_om_UOVH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=IZGG
+            humanName=IZGG
+            type=Thematic Groups
+            description=alf_om_IZGG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=KIEV
+            humanName=KIEV
+            type=Thematic Groups
+            description=alf_om_KIEV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FDUDH
+            humanName=FDUDH
+            type=Thematic Groups
+            description=alf_om_FDUDH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ZGUE
+            humanName=ZGUE
+            type=Thematic Groups
+            description=alf_om_ZGUE
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RIS
+            humanName=RIS
+            type=Thematic Groups
+            description=alf_om_RIS
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=AXDG
+            humanName=AXDG
+            type=Thematic Groups
+            description=alf_om_AXDG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LAAB
+            humanName=LAAB
+            type=Thematic Groups
+            description=alf_om_LAAB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=EHMH
+            humanName=EHMH
+            type=Thematic Groups
+            description=alf_om_EHMH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HPQW
+            humanName=HPQW
+            type=Thematic Groups
+            description=alf_om_HPQW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QGCZ
+            humanName=QGCZ
+            type=Thematic Groups
+            description=alf_om_QGCZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UBHAOX
+            humanName=UBHAOX
+            type=Thematic Groups
+            description=alf_om_UBHAOX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UACK
+            humanName=UACK
+            type=Thematic Groups
+            description=alf_om_UACK
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=SYRV
+            humanName=SYRV
+            type=Thematic Groups
+            description=alf_om_SYRV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BAJH
+            humanName=BAJH
+            type=Thematic Groups
+            description=alf_om_BAJH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BMBF
+            humanName=BMBF
+            type=Thematic Groups
+            description=alf_om_BMBF
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GYYQ
+            humanName=GYYQ
+            type=Thematic Groups
+            description=alf_om_GYYQ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=WFUW
+            humanName=WFUW
+            type=Thematic Groups
+            description=alf_om_WFUW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=XXYH
+            humanName=XXYH
+            type=Thematic Groups
+            description=alf_om_XXYH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MBWP
+            humanName=MBWP
+            type=Thematic Groups
+            description=alf_om_MBWP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ZZSV
+            humanName=ZZSV
+            type=Thematic Groups
+            description=alf_om_ZZSV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=OPENGROUP01
+            humanName=Legacy Open Group
+            type=Thematic Groups
+            description=Legacy open group (security model will not compile without one).
+            permissionAuthorities=ORG01 - Mr Admin
+            deprecated=true
+        </value>
+        <value>
+            systemName=FIBI
+            humanName=FIBI
+            type=Thematic Groups
+            description=alf_om_FIBI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=YJHI
+            humanName=YJHI
+            type=Thematic Groups
+            description=alf_om_YJHI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FAXW
+            humanName=FAXW
+            type=Thematic Groups
+            description=alf_om_FAXW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+            <parameter name="matchLogic"><value>OR</value></parameter>
+            <parameter name="description"><value>Deprecated Open Markings</value></parameter>
+            <parameter name="displayPriority"><value>Low</value></parameter>
+
+        </constraint>
+        
+        <constraint name="es:validOrganisations" type="com.surevine.alfresco.esl.impl.EnhancedSecurityConstraint">
+            <title>Organisations</title>
+            <parameter name="groupDetailsSpecification">
+                <list>
+        <value>
+            systemName=JLY_ZSBPNZQXRWEX
+            humanName=JLY_ZSBPNZQXRWEX
+            type=Organisations
+            description=alf_org_JLY_ZSBPNZQXRWEX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=CJTG
+            humanName=CJTG
+            type=Organisations
+            description=alf_org_CJTG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=XVKS
+            humanName=XVKS
+            type=Organisations
+            description=alf_org_XVKS
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GGC_JMDQIDZWYL
+            humanName=GGC_JMDQIDZWYL
+            type=Organisations
+            description=alf_org_GGC_JMDQIDZWYL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=EEB
+            humanName=EEB
+            type=Organisations
+            description=alf_org_EEB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=KNQY
+            humanName=KNQY
+            type=Organisations
+            description=alf_org_KNQY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=XBN
+            humanName=XBN
+            type=Organisations
+            description=alf_org_XBN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VXRB
+            humanName=VXRB
+            type=Organisations
+            description=alf_org_VXRB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GRB
+            humanName=GRB
+            type=Organisations
+            description=alf_org_GRB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FRC
+            humanName=FRC
+            type=Organisations
+            description=alf_org_FRC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=WVZ_TCXZCBZC
+            humanName=WVZ_TCXZCBZC
+            type=Organisations
+            description=alf_org_WVZ_TCXZCBZC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BZ
+            humanName=BZ
+            type=Organisations
+            description=alf_org_BZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=PTZR
+            humanName=PTZR
+            type=Organisations
+            description=alf_org_PTZR
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ORG01
+            humanName=Organisation 1
+            type=Organisations
+            description=alf_org_ORG01
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=ORG03
+            humanName=Organisation 3
+            type=Organisations
+            description=alf_org_ORG03
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=ORG02
+            humanName=Organisation 2
+            type=Organisations
+            description=alf_org_ORG02
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=HF
+            humanName=HF
+            type=Organisations
+            description=alf_org_HF
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=KFJ_OIWVDS
+            humanName=KFJ_OIWVDS
+            type=Organisations
+            description=alf_org_KFJ_OIWVDS
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=JTWV
+            humanName=JTWV
+            type=Organisations
+            description=alf_org_JTWV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LWX
+            humanName=LWX
+            type=Organisations
+            description=alf_org_LWX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=WFE_ZAGXJZVFY
+            humanName=WFE_ZAGXJZVFY
+            type=Organisations
+            description=alf_org_WFE_ZAGXJZVFY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+            <parameter name="matchLogic"><value>OR</value></parameter>
+            <parameter name="description"><value>Organisation Markings</value></parameter>
+            <parameter name="displayPriority"><value>Low</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validClosedMarkings" type="com.surevine.alfresco.esl.impl.EnhancedSecurityConstraint">
+            <title>Closed Markings</title>
+            <parameter name="groupDetailsSpecification">
+                <list>
+        <value>
+            systemName=QHMNEMWMYBU
+            humanName=QHMNEMWMYBU
+            type=Groups
+            description=alf_cm_QHMNEMWMYBU
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VCGKCNALQCFIO
+            humanName=VCGKCNALQCFIO
+            type=Groups
+            description=alf_cm_VCGKCNALQCFIO
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HFZIUG
+            humanName=HFZIUG
+            type=Groups
+            description=alf_cm_HFZIUG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=NGQLIZOSFIM
+            humanName=NGQLIZOSFIM
+            type=Groups
+            description=alf_cm_NGQLIZOSFIM
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=TYZEBVUOE
+            humanName=TYZEBVUOE
+            type=Groups
+            description=alf_cm_TYZEBVUOE
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=YQMRLXZOR
+            humanName=YQMRLXZOR
+            type=Groups
+            description=alf_cm_YQMRLXZOR
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RUYWZEZUJL
+            humanName=RUYWZEZUJL
+            type=Restrictions
+            description=alf_cm_RUYWZEZUJL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HCDJZTVWW
+            humanName=HCDJZTVWW
+            type=Groups
+            description=alf_cm_HCDJZTVWW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=NOBLCQQJMD
+            humanName=NOBLCQQJMD
+            type=Groups
+            description=alf_cm_NOBLCQQJMD
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VSPCGBMJJZJI
+            humanName=VSPCGBMJJZJI
+            type=Groups
+            description=alf_cm_VSPCGBMJJZJI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION09
+            humanName=Restriction 9
+            type=Restrictions
+            description=alf_cm_RESTRICTION09
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=RESTRICTION08
+            humanName=Restriction 8
+            type=Restrictions
+            description=alf_cm_RESTRICTION08
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=RESTRICTION07
+            humanName=Restriction 7
+            type=Restrictions
+            description=alf_cm_RESTRICTION07
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=FBOXYFZQOJDEUU
+            humanName=FBOXYFZQOJDEUU
+            type=Groups
+            description=alf_cm_FBOXYFZQOJDEUU
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION06
+            humanName=Restriction 6
+            type=Restrictions
+            description=alf_cm_RESTRICTION06
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=RESTRICTION05
+            humanName=Restriction 5
+            type=Restrictions
+            description=alf_cm_RESTRICTION05
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=BYCYHNJOPE
+            humanName=BYCYHNJOPE
+            type=Groups
+            description=alf_cm_BYCYHNJOPE
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION04
+            humanName=Restriction 4
+            type=Restrictions
+            description=alf_cm_RESTRICTION04
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=XFDNLCWUW
+            humanName=XFDNLCWUW
+            type=Groups
+            description=alf_cm_XFDNLCWUW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VSHCZYUSKQEM
+            humanName=VSHCZYUSKQEM
+            type=Groups
+            description=alf_cm_VSHCZYUSKQEM
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ALAZ
+            humanName=ALAZ
+            type=Groups
+            description=alf_cm_ALAZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=XOXKN
+            humanName=XOXKN
+            type=Groups
+            description=alf_cm_XOXKN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=WPROFL
+            humanName=WPROFL
+            type=Groups
+            description=alf_cm_WPROFL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BCPUKLM
+            humanName=BCPUKLM
+            type=Groups
+            description=alf_cm_BCPUKLM
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MEUSHTPSUZB
+            humanName=MEUSHTPSUZB
+            type=Groups
+            description=alf_cm_MEUSHTPSUZB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QDYVMP
+            humanName=QDYVMP
+            type=Groups
+            description=alf_cm_QDYVMP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=KWSACPBLSSEDGZ
+            humanName=KWSACPBLSSEDGZ
+            type=Groups
+            description=alf_cm_KWSACPBLSSEDGZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION02
+            humanName=Restriction 2
+            type=Restrictions
+            description=alf_cm_RESTRICTION02
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=SLJFYV
+            humanName=SLJFYV
+            type=Groups
+            description=alf_cm_SLJFYV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BJBSDGLTE
+            humanName=BJBSDGLTE
+            type=Groups
+            description=alf_cm_BJBSDGLTE
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION03
+            humanName=Restriction 3
+            type=Restrictions
+            description=alf_cm_RESTRICTION03
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=YYDJ
+            humanName=YYDJ
+            type=Groups
+            description=alf_cm_YYDJ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=CWFIBBBLZBD
+            humanName=CWFIBBBLZBD
+            type=Groups
+            description=alf_cm_CWFIBBBLZBD
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VSYCM
+            humanName=VSYCM
+            type=Groups
+            description=alf_cm_VSYCM
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=YUSQVIABTCZ
+            humanName=YUSQVIABTCZ
+            type=Groups
+            description=alf_cm_YUSQVIABTCZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION01
+            humanName=Restriction 1
+            type=Restrictions
+            description=alf_cm_RESTRICTION01
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=JBNJXDL
+            humanName=JBNJXDL
+            type=Groups
+            description=alf_cm_JBNJXDL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP09
+            humanName=Group 9
+            type=Groups
+            description=alf_cm_GROUP09
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=LWZQEAF
+            humanName=LWZQEAF
+            type=Restrictions
+            description=alf_cm_LWZQEAF
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MSQVIAR
+            humanName=MSQVIAR
+            type=Groups
+            description=alf_cm_MSQVIAR
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP04
+            humanName=Group 4
+            type=Groups
+            description=alf_cm_GROUP04
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=IMJGOLUUEW
+            humanName=IMJGOLUUEW
+            type=Groups
+            description=alf_cm_IMJGOLUUEW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=XDDPWZ
+            humanName=XDDPWZ
+            type=Groups
+            description=alf_cm_XDDPWZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP03
+            humanName=Group 3
+            type=Groups
+            description=alf_cm_GROUP03
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=IPCFWYCG
+            humanName=IPCFWYCG
+            type=Groups
+            description=alf_cm_IPCFWYCG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP02
+            humanName=Group 2
+            type=Groups
+            description=alf_cm_GROUP02
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=UAXBIFOV
+            humanName=UAXBIFOV
+            type=Groups
+            description=alf_cm_UAXBIFOV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP01
+            humanName=Group 1
+            type=Groups
+            description=alf_cm_GROUP01
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=GROUP08
+            humanName=Group 8
+            type=Groups
+            description=alf_cm_GROUP08
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=NDTOLPVS
+            humanName=NDTOLPVS
+            type=Restrictions
+            description=alf_cm_NDTOLPVS
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP07
+            humanName=Group 7
+            type=Groups
+            description=alf_cm_GROUP07
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=ZGQBQWUBCGZSHHL
+            humanName=ZGQBQWUBCGZSHHL
+            type=Groups
+            description=alf_cm_ZGQBQWUBCGZSHHL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP06
+            humanName=Group 6
+            type=Groups
+            description=alf_cm_GROUP06
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=GROUP05
+            humanName=Group 5
+            type=Groups
+            description=alf_cm_GROUP05
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=DQNC
+            humanName=DQNC
+            type=Restrictions
+            description=alf_cm_DQNC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GPDAAHQRRQW
+            humanName=GPDAAHQRRQW
+            type=Restrictions
+            description=alf_cm_GPDAAHQRRQW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=GROUP10
+            humanName=Group 10
+            type=Groups
+            description=alf_cm_GROUP10
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=IMZSDTAEONLVOGXI
+            humanName=IMZSDTAEONLVOGXI
+            type=Groups
+            description=alf_cm_IMZSDTAEONLVOGXI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=OIKDMFLTDFIQPP
+            humanName=OIKDMFLTDFIQPP
+            type=Groups
+            description=alf_cm_OIKDMFLTDFIQPP
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=NLONKVDK
+            humanName=NLONKVDK
+            type=Groups
+            description=alf_cm_NLONKVDK
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=KAAPEB
+            humanName=KAAPEB
+            type=Groups
+            description=alf_cm_KAAPEB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LIBYHXSILZ
+            humanName=LIBYHXSILZ
+            type=Groups
+            description=alf_cm_LIBYHXSILZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RESTRICTION10
+            humanName=Restriction 10
+            type=Restrictions
+            description=alf_cm_RESTRICTION10
+            permissionAuthorities=ORG01 - Mr Admin
+            
+        </value>
+        <value>
+            systemName=FOFARGCSKDMI
+            humanName=FOFARGCSKDMI
+            type=Groups
+            description=alf_cm_FOFARGCSKDMI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BTCYHVPZOJUX
+            humanName=BTCYHVPZOJUX
+            type=Groups
+            description=alf_cm_BTCYHVPZOJUX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UEKAQTK
+            humanName=UEKAQTK
+            type=Groups
+            description=alf_cm_UEKAQTK
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=XLZ
+            humanName=XLZ
+            type=Groups
+            description=alf_cm_XLZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ANZWXRUUZ
+            humanName=ANZWXRUUZ
+            type=Groups
+            description=alf_cm_ANZWXRUUZ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UXVHIKJYJJ
+            humanName=UXVHIKJYJJ
+            type=Groups
+            description=alf_cm_UXVHIKJYJJ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LNSAKTJN
+            humanName=LNSAKTJN
+            type=Restrictions
+            description=alf_cm_LNSAKTJN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MTK
+            humanName=MTK
+            type=Groups
+            description=alf_cm_MTK
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=QEAUMNDPPG
+            humanName=QEAUMNDPPG
+            type=Restrictions
+            description=alf_cm_QEAUMNDPPG
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MXNJYJAPUPSL
+            humanName=MXNJYJAPUPSL
+            type=Groups
+            description=alf_cm_MXNJYJAPUPSL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ELYQ
+            humanName=ELYQ
+            type=Groups
+            description=alf_cm_ELYQ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=CYFOKH
+            humanName=CYFOKH
+            type=Restrictions
+            description=alf_cm_CYFOKH
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=SKPVQ
+            humanName=SKPVQ
+            type=Groups
+            description=alf_cm_SKPVQ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HPVMD
+            humanName=HPVMD
+            type=Groups
+            description=alf_cm_HPVMD
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=DYHIOMYLVZKDMAM
+            humanName=DYHIOMYLVZKDMAM
+            type=Groups
+            description=alf_cm_DYHIOMYLVZKDMAM
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LKFLTWSLQDDB
+            humanName=LKFLTWSLQDDB
+            type=Groups
+            description=alf_cm_LKFLTWSLQDDB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=CRWVSROFIQALK
+            humanName=CRWVSROFIQALK
+            type=Groups
+            description=alf_cm_CRWVSROFIQALK
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=TFWABR
+            humanName=TFWABR
+            type=Groups
+            description=alf_cm_TFWABR
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ATOMAL1
+            humanName=Atomal 1
+            type=none
+            description=alf_cm_ATOMAL1
+            permissionAuthorities=ORG01 - Mr Admin
+            deprecated=true
+        </value>
+        <value>
+            systemName=ATOMAL2
+            humanName=Atomal 2
+            type=none
+            description=alf_cm_ATOMAL2
+            permissionAuthorities=ORG01 - Mr Admin
+            deprecated=true
+        </value>
+        <value>
+            systemName=OAOUWGVUPUQUJM
+            humanName=OAOUWGVUPUQUJM
+            type=Groups
+            description=alf_cm_OAOUWGVUPUQUJM
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=IHLNUHBUW
+            humanName=IHLNUHBUW
+            type=Groups
+            description=alf_cm_IHLNUHBUW
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BRMCQZAES
+            humanName=BRMCQZAES
+            type=Groups
+            description=alf_cm_BRMCQZAES
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ECYGC
+            humanName=ECYGC
+            type=Groups
+            description=alf_cm_ECYGC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=IJIFAWR
+            humanName=IJIFAWR
+            type=Groups
+            description=alf_cm_IJIFAWR
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=PZGXAWCETO
+            humanName=PZGXAWCETO
+            type=Groups
+            description=alf_cm_PZGXAWCETO
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VVIBD
+            humanName=VVIBD
+            type=Groups
+            description=alf_cm_VVIBD
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=YJBXVLEUMTDPPY
+            humanName=YJBXVLEUMTDPPY
+            type=Groups
+            description=alf_cm_YJBXVLEUMTDPPY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MQJHTOFNWJPAY
+            humanName=MQJHTOFNWJPAY
+            type=Groups
+            description=alf_cm_MQJHTOFNWJPAY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FBSDHZDSU
+            humanName=FBSDHZDSU
+            type=Groups
+            description=alf_cm_FBSDHZDSU
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VIAMGEPJCYFLTC
+            humanName=VIAMGEPJCYFLTC
+            type=Groups
+            description=alf_cm_VIAMGEPJCYFLTC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=RHZFOYWGAQRMIC
+            humanName=RHZFOYWGAQRMIC
+            type=Groups
+            description=alf_cm_RHZFOYWGAQRMIC
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BYZPGLBNUIIQRN
+            humanName=BYZPGLBNUIIQRN
+            type=Groups
+            description=alf_cm_BYZPGLBNUIIQRN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LBJPKB
+            humanName=LBJPKB
+            type=Groups
+            description=alf_cm_LBJPKB
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=IQWUWXOSHX
+            humanName=IQWUWXOSHX
+            type=Groups
+            description=alf_cm_IQWUWXOSHX
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=WSVPWGKFSJ
+            humanName=WSVPWGKFSJ
+            type=Groups
+            description=alf_cm_WSVPWGKFSJ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=HCSCOXNXVACPN
+            humanName=HCSCOXNXVACPN
+            type=Groups
+            description=alf_cm_HCSCOXNXVACPN
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=VZJOTI
+            humanName=VZJOTI
+            type=Groups
+            description=alf_cm_VZJOTI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=TBHRNVPMSQ
+            humanName=TBHRNVPMSQ
+            type=Groups
+            description=alf_cm_TBHRNVPMSQ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=CBRLER
+            humanName=CBRLER
+            type=Restrictions
+            description=alf_cm_CBRLER
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ODGL
+            humanName=ODGL
+            type=Groups
+            description=alf_cm_ODGL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FUXEKIOYVL
+            humanName=FUXEKIOYVL
+            type=Groups
+            description=alf_cm_FUXEKIOYVL
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=OFSAXCCLD
+            humanName=OFSAXCCLD
+            type=Groups
+            description=alf_cm_OFSAXCCLD
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=ZPCIPVBZABEOOOQ
+            humanName=ZPCIPVBZABEOOOQ
+            type=Groups
+            description=alf_cm_ZPCIPVBZABEOOOQ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=MNTPPNIKSDJ
+            humanName=MNTPPNIKSDJ
+            type=Groups
+            description=alf_cm_MNTPPNIKSDJ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=YIEIYIQZJK
+            humanName=YIEIYIQZJK
+            type=Groups
+            description=alf_cm_YIEIYIQZJK
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=YTQTGAXGZDPV
+            humanName=YTQTGAXGZDPV
+            type=Groups
+            description=alf_cm_YTQTGAXGZDPV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=PHDLBFKSRCF
+            humanName=PHDLBFKSRCF
+            type=Groups
+            description=alf_cm_PHDLBFKSRCF
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=FMYODBJEV
+            humanName=FMYODBJEV
+            type=Groups
+            description=alf_cm_FMYODBJEV
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=LLNLEY
+            humanName=LLNLEY
+            type=Groups
+            description=alf_cm_LLNLEY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BXQCER
+            humanName=BXQCER
+            type=Groups
+            description=alf_cm_BXQCER
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=UPJKMVOKZQI
+            humanName=UPJKMVOKZQI
+            type=Groups
+            description=alf_cm_UPJKMVOKZQI
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BIYHJEJRTTCY
+            humanName=BIYHJEJRTTCY
+            type=Groups
+            description=alf_cm_BIYHJEJRTTCY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=BYECCCMRBTTDJ
+            humanName=BYECCCMRBTTDJ
+            type=Groups
+            description=alf_cm_BYECCCMRBTTDJ
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+        <value>
+            systemName=TLPXUBNKY
+            humanName=TLPXUBNKY
+            type=Groups
+            description=alf_cm_TLPXUBNKY
+            permissionAuthorities=Jonny Heavey - Surevine
+            
+        </value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+            <parameter name="matchLogic"><value>AND</value></parameter>
+            <parameter name="description"><value>Closed Markings, comprising groups and restrictions</value></parameter>
+            <parameter name="filterDisplay"><value>true</value></parameter>
+            <parameter name="displayPriority"><value>High</value></parameter>
+        </constraint>
+    
+        <!-- Although we'll only be using the very bottom of this list, it
+             was felt that we should include all the values in the enumeration
+             in order to be more compliant with COSP02
+        --> 
+        <constraint name="es:validPMs" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>NATO UNCLASSIFIED</value>
+                    <value>NATO RESTRICTED</value>
+                    <value>NATO CONFIDENTIAL</value>
+                    <value>CONFIDENTIAL</value>
+                    <value>NATO SECRET</value>
+                    <value>COSMIC TOP SECRET</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validNODs" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value>UK</value>
+                    <value></value>
+                    <value>ME</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+        </constraint>
+        
+        <constraint name="es:validNationalCaveats" type="LIST">
+            <parameter name="allowedValues">
+                <list>
+                    <value></value>
+                    <value>UK EYES ONLY</value>
+                    <value>AUS/UK EYES ONLY</value>
+                    <value>CAN/UK EYES ONLY</value>
+                    <value>FRA/UK EYES ONLY</value>
+                    <value>US/UK EYES ONLY</value>
+                    <value>AUS/CAN/UK EYES ONLY</value>
+                    <value>AUS/FRA/UK EYES ONLY</value>
+                    <value>AUS/US/UK EYES ONLY</value>
+                    <value>CAN/FRA/UK EYES ONLY</value>
+                    <value>CAN/UK/US EYES ONLY</value>
+                    <value>FRA/UK/US EYES ONLY</value>
+                    <value>AUS/CAN/UK EYES ONLY</value>
+                    <value>CAN/FRA/UK/US EYES ONLY</value>
+                    <value>AUS/FRA/UK/US EYES ONLY</value>
+                    <value>AUS/CAN/UK/US EYES ONLY</value>
+                    <value>AUS/CAN/FRA/UK EYES ONLY</value>
+                    <value>AUS/CAN/FRA/UK/US EYES ONLY</value>
+                </list>
+            </parameter>
+            <parameter name="caseSensitive"><value>true</value></parameter>
+        </constraint>
+        
+    </constraints>
+
+    <aspects>
+        <aspect name="es:enhancedSecurityLabel">
+            <title>Security Marking</title>
+            
+            <properties>
+            
+                <property name="es:openMarkings">
+                    <title>Open Markings</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple>
+                    <constraints>
+                        <constraint ref="es:validOpenMarkings"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:organisations">
+                    <title>Organisations</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple>
+                    <constraints>
+                        <constraint ref="es:validOrganisations"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:closedMarkings">
+                    <title>Closed Markings</title>
+                    <type>d:text</type>
+                    <multiple>true</multiple>
+                    <constraints>
+                        <constraint ref="es:validClosedMarkings"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:pm">
+                    <title>Protective Marking</title>
+                    <type>d:text</type>
+                    <mandatory enforced='true'>true</mandatory>
+                    <default>NOT PROTECTIVELY MARKED</default>
+                    <constraints>
+                        <constraint ref="es:validPMs"/>
+                    </constraints>
+                </property>
+                
+               <!--  
+               This is a bit awkward.  I'm trying to say that the nod can be either "UK" or nothing.
+               So I've gone with "You don't _have_ to have this parameter, but if you do it's got to 
+               be "UK".  I've used a LOV constraint to make it trivial to extend into a multinational
+               or officer-exchange type domain in the future
+                -->
+                <property name="es:nod">
+                    <title>National Ownership Designator</title>
+                    <type>d:text</type>
+                    <default>UK</default>
+                    <constraints>
+                        <constraint ref="es:validNODs"/>
+                    </constraints>
+                </property>
+                
+                <property name="es:nationalityCaveats">
+                    <title>Nationality Caveats</title>
+                    <type>d:text</type>
+                    <mandatory enforced='true'>true</mandatory>
+                    <default>UK EYES ONLY</default>
+                    <constraints>
+                        <constraint ref="es:validNationalCaveats"/>
+                    </constraints>
+                </property>
+                <!-- 
+                Was thinking about making this multiple, but then you get into horrible issues about the difference 
+                between {"FOO","BAR"} and "FOO BAR" so suggest a single piece of text is simplest ergo best
+                -->
+                <property name="es:freeFormCaveats">
+                    <title>Free Form Caveats</title>
+                    <type>d:text</type>
+                </property>
+            </properties>
+        </aspect>
+    </aspects>
+</model>
