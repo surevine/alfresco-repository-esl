@@ -70,9 +70,12 @@ tokenised_share_files=(
     'components/enhanced-security/selector/enhanced-security-static-data.js'
     'components/enhanced-security/selector/enhanced-security-selector-min.js'
     'components/enhanced-security/selector/enhanced-security-selector.js'
+    'components/enhanced-security/selector/visibility-utils-min.js'
+    'components/enhanced-security/selector/visibility-utils.js'
     'WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/enhanced-security/lib/enhanced-security.lib.js'
     'WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/enhanced-security/selector/enhanced-security-selector.get.properties'
     'WEB-INF/classes/alfresco/site-webscripts/org/alfresco/components/enhanced-security/selector/enhanced-security-selector.get_en.properties'
+    
     )
 
 tokenised_alfresco_files=(
