@@ -1,6 +1,6 @@
-<import resource = 'classpath:alfresco/templates/webscripts/org/alfresco/repository/requestutils.lib.js' >
-<import resource = 'classpath:alfresco/templates/webscripts/org/alfresco/repository/nodenameutils.lib.js' >
-<import resource = 'classpath:alfresco/templates/webscripts/org/alfresco/repository/comments/comments.lib.js' >
+<import resource="classpath:alfresco/templates/webscripts/org/alfresco/repository/requestutils.lib.js">
+<import resource="classpath:alfresco/templates/webscripts/org/alfresco/repository/nodenameutils.lib.js">
+<import resource="classpath:alfresco/templates/webscripts/org/alfresco/repository/comments/comments.lib.js">
 
 /*
  * Copyright (C) 2008-2010 Surevine Limited.
