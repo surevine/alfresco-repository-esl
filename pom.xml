@@ -27,7 +27,7 @@
 	<artifactId>repo.esl.module</artifactId>
 	<packaging>jar</packaging>
 	<name>ESL Repo Module Dependencies</name>
-	<version>1.7.2-SNAPSHOT</version>
+	<version>1.7.2</version>
 	<description>ESL Repo Module</description>
 	
 	<properties>
