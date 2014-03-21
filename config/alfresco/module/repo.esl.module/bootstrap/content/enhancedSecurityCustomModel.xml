@@ -104,12 +104,12 @@
         <constraint name="es:validPMs" type="LIST">
             <parameter name="allowedValues">
                 <list>
-                    <value>NOT PROTECTIVELY MARKED</value>
-                    <value>PROTECT</value>
-                    <value>RESTRICTED</value>
-                    <value>CONFIDENTIAL</value>
-                    <value>SECRET</value>
-                    <value>TOP SECRET</value>
+                    <value>LEVEL1</value>
+                    <value>LEVEL2</value>
+                    <value>LEVEL3</value>
+                    <value>LEVEL4</value>
+                    <value>LEVEL5</value>
+                    <value>LEVEL6</value>
                 </list>
             </parameter>
             <parameter name="caseSensitive"><value>true</value></parameter>
