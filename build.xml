@@ -72,7 +72,8 @@
 	<target name="test" depends="compile, test-compile">
 		<junit fork="yes" haltonfailure="yes">
             <jvmarg value="-Demma.coverage.out.file=${coverage.dir}/coverage.emma" />  
-    		<jvmarg value="-Demma.coverage.out.merge=true" /> 
+    		<jvmarg value="-Demma.coverage.out.merge=true" />
+		<jvmarg value="-XX:-UseSplitVerifier" /> 
 			<classpath>
 				<pathelement location="${instrumented.dir}" />
 				<path refid="emma.lib"/>
